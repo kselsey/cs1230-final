@@ -39,7 +39,7 @@ const pond = new Pond();
 scene.add(pond)
 
 // camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);
 camera.position.z = 20;
 camera.position.y = 1.7;
 camera.lookAtVector = new THREE.Vector3(0,0,-1);
