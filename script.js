@@ -1,9 +1,11 @@
 import * as THREE from "three";
+
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import { Grass } from "./grass/grass";
 import { Barn } from "./barn";
+import { Pond } from "./Pond";
 import { Skybox } from "./skybox.js"
 
 // scene
@@ -15,8 +17,13 @@ const sizes = {
 };
 
 // lighting
-const light = new THREE.DirectionalLight("white", 10)
-light.position.set(1,2,1)
+//const light = new THREE.DirectionalLight("white", 10);
+//light.position.set(1,2,1)
+//light.position.set(-15, 5, 45);
+const light = new THREE.PointLight("white", 200)
+light.position.set(-5, 7, 20);
+light.decay = 1.5;
+light.castShadow = true;
 scene.add(light)
 const ambient_lighting = new THREE.AmbientLight(0x404040, 10)
 scene.add(ambient_lighting)
@@ -28,10 +35,13 @@ const grass = new Grass(50, 500000)
 scene.add(grass)
 const barn = new Barn();
 scene.add(barn)
+const pond = new Pond();
+scene.add(pond)
 
 // camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);
-camera.position.set(0, 2, 20);
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
+camera.position.z = 20;
+camera.position.y = 1.7;
 camera.lookAtVector = new THREE.Vector3(0,0,-1);
 camera.getWorldDirection(camera.lookAtVector);
 scene.add(camera);
@@ -41,6 +51,8 @@ const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
 });
 renderer.setSize(sizes.width, sizes.height);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.BasicShadowMap;
 
 // Camera controls
 const controls = new PointerLockControls(camera, renderer.domElement);
@@ -104,5 +116,6 @@ function onKeyDown(event) {
 renderer.setAnimationLoop((time) => {
   //controls.update(0.0001 * time); // for firstPersonControls
   grass.update(time)
+  pond.animate();
   renderer.render(scene, camera)
 })

@@ -45,6 +45,7 @@ export class GrassGeometry extends THREE.BufferGeometry {
     this.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2))
     this.setIndex(indices)
     this.computeVertexNormals()
+    
   }
 
   // Grass blade generation, covered in https://smythdesign.com/blog/stylized-grass-webgl
