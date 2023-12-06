@@ -6,6 +6,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 import { Grass } from "./grass/grass";
 import { Barn } from "./barn";
 import { Pond } from "./Pond";
+import { Pig } from "./animals/pig.js";
 import { Skybox } from "./skybox.js"
 
 // scene
@@ -19,7 +20,7 @@ const sizes = {
 // lighting
 //const light = new THREE.DirectionalLight("white", 10);
 //light.position.set(1,2,1)
-//light.position.set(-15, 5, 45);
+//light.position.set(-5, 5, 32);
 const light = new THREE.PointLight("white", 200)
 light.position.set(-5, 7, 20);
 light.decay = 1.5;
@@ -37,6 +38,17 @@ const barn = new Barn();
 scene.add(barn)
 const pond = new Pond();
 scene.add(pond)
+
+// adding animals
+const pig1 = new Pig();
+const pig2 = new Pig();
+const pig3 = new Pig();
+scene.add(pig1.totalPig);
+scene.add(pig2.totalPig);
+scene.add(pig3.totalPig);
+pig1.totalPig.position.set(-10, 1, 12);
+pig2.totalPig.position.set(3, 1, 20);
+pig3.totalPig.position.set(-20, 1, 40);
 
 // camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);
