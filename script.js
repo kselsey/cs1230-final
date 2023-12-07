@@ -5,6 +5,7 @@ import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.j
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import { Grass } from "./grass/grass";
 import { Barn } from "./barn";
+import { Tree } from "./tree";
 import { Pond } from "./Pond";
 import { Pig } from "./animals/pig.js";
 import { Skybox } from "./skybox.js"
@@ -38,6 +39,8 @@ const barn = new Barn();
 scene.add(barn)
 const pond = new Pond();
 scene.add(pond)
+const tree = new Tree();
+scene.add(tree);
 
 // adding animals
 const pig1 = new Pig();
@@ -68,9 +71,6 @@ renderer.shadowMap.type = THREE.BasicShadowMap;
 
 // Camera controls
 const controls = new PointerLockControls(camera, renderer.domElement);
-controls.addEventListener("change", () => console.log("changed"));
-controls.addEventListener("lock", () => console.log("locked"));
-controls.addEventListener("unlock", () => console.log("unlocked"));
 // Lock pointer on mouse click (unlock with escape)
 document.addEventListener("mousedown", () => controls.lock());
 document.addEventListener("keydown", onKeyDown, false);
