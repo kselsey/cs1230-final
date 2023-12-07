@@ -20,7 +20,7 @@ export class PineTree extends THREE.Mesh{
      *                 Image by 0melapics on Freepik
      */
     makeTrunk() {
-        let trunkTexture = new THREE.TextureLoader().load("textures/884.jpg")
+        let trunkTexture = new THREE.TextureLoader().load("textures/treeBark.jpg")
         trunkTexture.wrapS = THREE.RepeatWrapping;
         trunkTexture.wrapT = THREE.RepeatWrapping;
         let trunkMaterial = new THREE.MeshPhongMaterial({color : "#43260a", map : trunkTexture})
