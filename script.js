@@ -5,11 +5,11 @@ import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.j
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import { Grass } from "./grass/grass";
 import { Barn } from "./barn";
-import { Tree } from "./tree";
+import { AppleTree } from "./Trees/appleTree.js";
 import { Pond } from "./Pond";
 import { Pig } from "./animals/pig.js";
 import { Skybox } from "./skybox.js"
-import { PineTree } from "./pineTree.js";
+import { PineTree } from "./Trees/pineTree.js";
 
 // scene
 const canvas = document.querySelector("canvas.webgl");
@@ -32,20 +32,18 @@ const ambient_lighting = new THREE.AmbientLight(0x404040, 10)
 scene.add(ambient_lighting)
 
 // adding objects
-const skybox = new Skybox();
-scene.add(skybox);
 const grass = new Grass(50, 500000)
 scene.add(grass)
-const barn = new Barn();
-scene.add(barn)
-const pineTree1 = new PineTree(10, 5, 35);
-const pineTree2 = new PineTree(18, 5, 30);
-scene.add(pineTree1);
-scene.add(pineTree2);
 const pond = new Pond();
 scene.add(pond)
-const tree = new Tree();
-scene.add(tree);
+scene.add(new Skybox());
+scene.add(new Barn())
+scene.add(new PineTree(10, 5, 35));
+scene.add(new PineTree(18, 5, 30));
+scene.add(new AppleTree());
+const appleTree2 = new AppleTree();
+appleTree2.move(-8,4);
+scene.add(appleTree2)
 
 // adding animals
 const pig1 = new Pig();
@@ -61,7 +59,7 @@ pig3.totalPig.position.set(-20, 1, 40);
 // camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);
 camera.position.z = 20;
-camera.position.y = 1.7;
+camera.position.y = 2;
 camera.lookAtVector = new THREE.Vector3(0,0,-1);
 camera.getWorldDirection(camera.lookAtVector);
 scene.add(camera);

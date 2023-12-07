@@ -22,7 +22,8 @@ class Barn extends THREE.Mesh {
     const barnTexture = new THREE.TextureLoader().load(
       "textures/redWoodTexture.png"
     );
-    const barnMaterial = new THREE.MeshPhongMaterial({ map: barnTexture });
+   // const barnMaterial = new THREE.MeshPhongMaterial({ map: barnTexture });
+    const barnMaterial = new THREE.MeshPhongMaterial({color: "red"})
     const roofTexture = new THREE.TextureLoader().load(
       "textures/roofTexture.webp"
     );
@@ -30,7 +31,8 @@ class Barn extends THREE.Mesh {
     roofTexture.wrapT = THREE.RepeatWrapping;
     roofTexture.repeat.set(4, 4);
 
-    const roofMaterial = new THREE.MeshPhongMaterial({ map: roofTexture });
+   // const roofMaterial = new THREE.MeshPhongMaterial({ map: roofTexture });
+   const roofMaterial = new THREE.MeshPhongMaterial({color: "#403532"})
 
     const barnBox = new THREE.BoxGeometry(8, 5, 10);
     const barnMesh = new THREE.Mesh(barnBox, barnMaterial)
