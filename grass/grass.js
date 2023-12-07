@@ -102,7 +102,9 @@ class Grass extends THREE.Mesh {
     const floor = new THREE.Mesh(
       new THREE.BoxGeometry(size,1,size).translate(0, 0,size/2),
       material
+     // new THREE.MeshStandardMaterial({color: "#33994d"})
     )
+    floor.receiveShadow = true;
     floor.position.y = -Number.EPSILON
     this.add(floor)
   }

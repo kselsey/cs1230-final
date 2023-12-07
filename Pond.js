@@ -6,10 +6,14 @@ let center_z;
 var direction1 = {value: 1};
 var direction2 = {value: 1};
 var direction3 = {value: -1};
+var direction4 = {value: -1};
+var direction5 = {value: 1};
 
 let duck1List = [];
 let duck2List = [];
 let duck3List = [];
+let duck4List = [];
+let duck5List = [];
 
 var d1rand = {value: 0.005};
 var d1rand2 = {value: 0.005};
@@ -20,6 +24,12 @@ var d2rand2 = {value: 0.005};
 var d3rand = {value: 0.005};
 var d3rand2 = {value: 0.005};
 
+var d4rand = {value: 0.005};
+var d4rand2 = {value: 0.005};
+
+var d5rand = {value: 0.005};
+var d5rand2 = {value: 0.005};
+
 class Pond extends THREE.Mesh {
 
     constructor() {
@@ -29,12 +39,35 @@ class Pond extends THREE.Mesh {
         this.makeDuck(duck1List);
         this.makeDuck(duck2List);
         this.makeDuck(duck3List);
+        this.makeDuck(duck4List);
+        this.makeDuck(duck5List);
+        
+
+        duck1List.forEach(each => each.geometry.scale(0.5, 0.5, 0.5));
+        duck2List.forEach(each => each.geometry.scale(0.5, 0.5, 0.5));
+        duck3List.forEach(each => each.geometry.scale(0.5, 0.5, 0.5));
+        duck4List.forEach(each => each.geometry.scale(0.5, 0.5, 0.5));
+        duck5List.forEach(each => each.geometry.scale(0.5, 0.5, 0.5));
+        
+
+        duck1List.forEach(each => each.geometry.translate(-4, 0.5, 15));
+        duck2List.forEach(each => each.geometry.translate(-4, 0.5, 15));
+        duck3List.forEach(each => each.geometry.translate(-4, 0.5, 15));
+        duck4List.forEach(each => each.geometry.translate(-4, 0.5, 15));
+        duck5List.forEach(each => each.geometry.translate(-4, 0.5, 15));
+        
 
         duck2List.forEach(each => each.position.x = each.position.x - 1);
         duck2List.forEach(each => each.position.z = each.position.z + 3);
         
         duck3List.forEach(each => each.position.x = each.position.x - 2);
         duck3List.forEach(each => each.position.z = each.position.z - 3.5);
+
+        duck4List.forEach(each => each.position.x = each.position.x - 4);
+        duck4List.forEach(each => each.position.z = each.position.z + 1);
+
+        duck5List.forEach(each => each.position.x = each.position.x - 3);
+        duck5List.forEach(each => each.position.z = each.position.z + 4);
 
       }
       
@@ -61,7 +94,7 @@ class Pond extends THREE.Mesh {
         // the head
         const head_g = new THREE.SphereGeometry( 0.4, 24, 24 );
         head_g.translate(-9.5, 1.6, 30);
-        if(list == duck3List){
+        if(list == duck3List || list == duck4List){
             head_g.translate(-0.75, 0, 0);
         }
         const head_m = new THREE.MeshPhongMaterial({ color: "yellow" });
@@ -69,7 +102,7 @@ class Pond extends THREE.Mesh {
 
         // the beak
         const beak_g = new THREE.ConeGeometry( 0.15, 0.5, 16 );
-        if(list == duck3List){
+        if(list == duck3List || list == duck4List){
             beak_g.rotateZ(Math.PI/2)
             beak_g.translate(-1.75, 0, 0);
         } else {
@@ -88,7 +121,7 @@ class Pond extends THREE.Mesh {
         // the two eyes
         const eye_g = new THREE.SphereGeometry( 0.10, 24, 24 );
         const eye_g2 = new THREE.SphereGeometry( 0.10, 24, 24 );
-        if(list == duck3List){
+        if(list == duck3List || list == duck4List){
             eye_g.translate(-10.1, 1.7, 30.3);
             eye_g2.translate(-10.1, 1.7, 29.7);
         } else {
@@ -103,17 +136,17 @@ class Pond extends THREE.Mesh {
         head.castShadow = true;
         //beak.castShadow = true;
 
-        this.add(head);
-        this.add(beak);
-        this.add(body);
-        this.add(eye);
-        this.add(eye2);
-
         list.push(head);
         list.push(beak);
         list.push(body);
         list.push(eye);
         list.push(eye2);
+
+        this.add(head);
+        this.add(beak);
+        this.add(body);
+        this.add(eye);
+        this.add(eye2);
     
     }
     animate(){
@@ -125,7 +158,7 @@ class Pond extends THREE.Mesh {
             var target2 = new THREE.Vector3();
             list2[2].getWorldPosition( target2 );
 
-            if((Math.abs(target.x - target2.x) < 1) && (Math.abs(target.z - target2.z) < 1)){
+            if((Math.abs(target.x - target2.x) < 0.8) && (Math.abs(target.z - target2.z) < 0.8)){
 
                 d1.value = -(d1.value );  
                 d2.value = -(d2.value ); 
@@ -146,8 +179,8 @@ class Pond extends THREE.Mesh {
 
         // check if a duck is out of bounds of the pond, updating global variables as needed
         function check_out_of_bounds(list, r1, r2, direction){
-            if(list[2].position.x > center_x + 4 || list[2].position.x < center_x - 4
-                || list[2].position.z > center_z + 4 || list[2].position.z < center_z - 4){
+            if(list[2].position.x > center_x + 4.25 || list[2].position.x < center_x - 4.25
+                || list[2].position.z > center_z + 4.25 || list[2].position.z < center_z - 4.25){
                 direction.value  = -(direction.value );  
                 r1.value  = Math.random() * (10 - 2) + 2;
                 r1.value  = r1.value  / 1000;
@@ -166,14 +199,41 @@ class Pond extends THREE.Mesh {
     // collision between duck 2 and duck 3
     check_duck_collision(duck2List, duck3List, d2rand, d2rand2, d3rand, d3rand2, direction2, direction3)
 
+    // collision between duck 1 and duck 4
+    check_duck_collision(duck1List, duck4List, d1rand, d1rand2, d4rand, d4rand2, direction1, direction4)
+
+    // collision between duck 1 and duck 5
+    check_duck_collision(duck2List, duck5List, d2rand, d2rand2, d5rand, d5rand2, direction2, direction5)
+
+    // collision between duck 2 and duck 4
+    check_duck_collision(duck2List, duck4List, d2rand, d2rand2, d4rand, d4rand2, direction2, direction4)
+
+    // collision between duck 2 and duck 5
+    check_duck_collision(duck2List, duck5List, d2rand, d2rand2, d5rand, d5rand2, direction2, direction5)
+
+    // collision between duck 3 and duck 4
+    check_duck_collision(duck3List, duck4List, d3rand, d3rand2, d4rand, d4rand2, direction3, direction4)
+
+    // collision between duck 3 and duck 5
+    check_duck_collision(duck5List, duck3List, d5rand, d5rand2, d3rand, d3rand2, direction5, direction3)
+
+    // collision between duck 4 and duck 5
+    check_duck_collision(duck4List, duck5List, d4rand, d4rand2, d5rand, d5rand2, direction4, direction5)
+
     // is duck 1 out of bounds
     check_out_of_bounds(duck1List, d1rand, d1rand2, direction1);
 
     // is duck 2 out of bounds
     check_out_of_bounds(duck2List, d2rand, d2rand2, direction2);
 
-    // is duck 2 out of bounds
+    // is duck 3 out of bounds
     check_out_of_bounds(duck3List, d3rand, d3rand2, direction3);
+
+    // is duck 4 out of bounds
+    check_out_of_bounds(duck4List, d4rand, d4rand2, direction4);
+
+    // is duck 5 out of bounds
+    check_out_of_bounds(duck5List, d5rand, d5rand2, direction5);
 
     //update duck 1's position
     duck1List.forEach(each => each.position.x = each.position.x + (direction1.value ) * 1.5 * d1rand.value );
@@ -186,6 +246,14 @@ class Pond extends THREE.Mesh {
     //update duck 3's position
     duck3List.forEach(each => each.position.x = each.position.x + (direction3.value ) * 1.5 * d3rand.value );
     duck3List.forEach(each => each.position.z = each.position.z + (direction3.value ) * 1.5 * d3rand2.value );
+
+    //update duck 4's position
+    duck4List.forEach(each => each.position.x = each.position.x + (direction4.value ) * 1.5 * d4rand.value );
+    duck4List.forEach(each => each.position.z = each.position.z + (direction4.value ) * 1.5 * d4rand2.value );
+
+    //update duck 5's position
+    duck5List.forEach(each => each.position.x = each.position.x + (direction5.value ) * 1.5 * d5rand.value );
+    duck5List.forEach(each => each.position.z = each.position.z + (direction5.value ) * 1.5 * d5rand2.value );
     }
   }
   
