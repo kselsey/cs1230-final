@@ -1,15 +1,14 @@
 import * as THREE from "three";
 
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import { Grass } from "./grass/grass";
 import { Barn } from "./barn";
 import { AppleTree } from "./Trees/appleTree.js";
 import { Pond } from "./Pond";
-import { Pig } from "./animals/pig.js";
 import { Skybox } from "./skybox.js"
 import { PineTree } from "./Trees/pineTree.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { Pig } from "./animals/pig";
 
 // scene
 const canvas = document.querySelector("canvas.webgl");
