@@ -23,7 +23,7 @@ const sizes = {
 //light.position.set(1,2,1)
 //light.position.set(-5, 5, 32);
 const light = new THREE.PointLight("white", 200)
-light.position.set(-5, 7, 20);
+light.position.set(-5, 15, 20);
 light.decay = 1.5;
 light.castShadow = true;
 scene.add(light)

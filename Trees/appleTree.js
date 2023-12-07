@@ -13,7 +13,10 @@ class AppleTree extends THREE.Mesh {
   }
 
   makeTrunk(){
-    const trunkMaterial = new THREE.MeshPhongMaterial({ color: "#401C08" });
+    let trunkTexture = new THREE.TextureLoader().load("textures/treeBark.jpg");
+    trunkTexture.wrapS = THREE.RepeatWrapping;
+    trunkTexture.wrapT = THREE.RepeatWrapping;
+    const trunkMaterial = new THREE.MeshToonMaterial({ color: "#401C08" , map: trunkTexture});
     const trunk = new THREE.CylinderGeometry(1,1,9,5,1,false,0,2 * Math.PI);
     const trunkMesh = new THREE.Mesh(trunk, trunkMaterial);
     this.add(trunkMesh)
@@ -21,7 +24,7 @@ class AppleTree extends THREE.Mesh {
   }
 
   makeBush(){
-    const bushMaterial = new THREE.MeshPhongMaterial({color: "#0E4008"});
+    const bushMaterial = new THREE.MeshToonMaterial({color: "#0E4008"});
     const bushRadius = 7;
     for (let i=0; i<300; i++){
         const xOffset = -bushRadius/2 + Math.random()*bushRadius;

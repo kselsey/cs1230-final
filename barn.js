@@ -23,7 +23,7 @@ class Barn extends THREE.Mesh {
       "textures/redWoodTexture.png"
     );
    // const barnMaterial = new THREE.MeshPhongMaterial({ map: barnTexture });
-    const barnMaterial = new THREE.MeshPhongMaterial({color: "red"})
+    const barnMaterial = new THREE.MeshToonMaterial({color: "red", map: barnTexture})
     const roofTexture = new THREE.TextureLoader().load(
       "textures/roofTexture.webp"
     );
@@ -32,7 +32,7 @@ class Barn extends THREE.Mesh {
     roofTexture.repeat.set(4, 4);
 
    // const roofMaterial = new THREE.MeshPhongMaterial({ map: roofTexture });
-   const roofMaterial = new THREE.MeshPhongMaterial({color: "#403532"})
+   const roofMaterial = new THREE.MeshToonMaterial({color: "#403532", map: roofTexture})
 
     const barnBox = new THREE.BoxGeometry(8, 5, 10);
     const barnMesh = new THREE.Mesh(barnBox, barnMaterial)
@@ -59,7 +59,7 @@ class Barn extends THREE.Mesh {
   }
 
   makeFrontWindows() {
-    const material = new THREE.MeshPhongMaterial({ color: "white" });
+    const material = new THREE.MeshToonMaterial({ color: "white" });
 
     const l1 = new THREE.BoxGeometry(0.1, 4, 0.1);
     l1.translate(-2, -0.5, 5);
@@ -105,7 +105,7 @@ class Barn extends THREE.Mesh {
 
   makeSideWindows(left) {
     const x = left ? -4 : 4;
-    const material = new THREE.MeshPhongMaterial({ color: "white" });
+    const material = new THREE.MeshToonMaterial({ color: "white" });
 
     for (let i = -1; i < 2; i++) {
       const sq11 = new THREE.BoxGeometry(0.1, 1.5, 0.1);

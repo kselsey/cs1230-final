@@ -97,7 +97,7 @@ class Pond extends THREE.Mesh {
         if(list == duck3List || list == duck4List){
             head_g.translate(-0.75, 0, 0);
         }
-        const head_m = new THREE.MeshPhongMaterial({ color: "yellow" });
+        const head_m = new THREE.MeshToonMaterial({ color: "yellow" });
         const head = new THREE.Mesh(head_g, head_m);
 
         // the beak
@@ -109,13 +109,13 @@ class Pond extends THREE.Mesh {
             beak_g.rotateZ(-Math.PI/2);
         }
         beak_g.translate(-9, 1.6, 30);
-        const beak_m = new THREE.MeshPhongMaterial({ color: "orange" });
+        const beak_m = new THREE.MeshToonMaterial({ color: "orange" });
         const beak = new THREE.Mesh(beak_g, beak_m);
 
         // the body
         const body_g = new THREE.SphereGeometry( 0.75, 24, 24 );
         body_g.translate(-10, 0.75, 30);
-        const body_m = new THREE.MeshPhongMaterial({ color: "yellow" });
+        const body_m = new THREE.MeshToonMaterial({ color: "yellow" });
         const body = new THREE.Mesh(body_g, body_m);
 
         // the two eyes
@@ -128,7 +128,7 @@ class Pond extends THREE.Mesh {
             eye_g.translate(-9.6, 1.7, 30.3);
             eye_g2.translate(-9.6, 1.7, 29.7);
         }
-        const eye_m = new THREE.MeshPhongMaterial({ color: "black" });
+        const eye_m = new THREE.MeshToonMaterial({ color: "black" });
         const eye = new THREE.Mesh(eye_g, eye_m);
         const eye2 = new THREE.Mesh(eye_g2, eye_m);
 
