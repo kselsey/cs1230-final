@@ -5,6 +5,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 import { Grass } from "./grass/grass";
 import { Barn } from "./barn";
 import { Skybox } from "./skybox.js"
+import { PineTree } from "./pineTree.js";
 
 // scene
 const canvas = document.querySelector("canvas.webgl");
@@ -28,6 +29,10 @@ const grass = new Grass(50, 500000)
 scene.add(grass)
 const barn = new Barn();
 scene.add(barn)
+const pineTree1 = new PineTree(10, 5, 35);
+const pineTree2 = new PineTree(18, 5, 30);
+scene.add(pineTree1);
+scene.add(pineTree2);
 
 // camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);

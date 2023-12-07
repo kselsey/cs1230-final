@@ -44,7 +44,7 @@ export class Skybox extends THREE.Mesh{
             // Load the texture
             let texture = new THREE.TextureLoader().load(filePaths[file]);
             // Map the texture to the backside of a mesh material
-            let mesh = new THREE.MeshBasicMaterial({map: texture, side: THREE.BackSide}) 
+            let mesh = new THREE.MeshBasicMaterial({map: texture, side: THREE.BackSide});
             materialArray.push(mesh);
         }
         return materialArray;
