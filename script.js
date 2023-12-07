@@ -9,6 +9,7 @@ import { Tree } from "./tree";
 import { Pond } from "./Pond";
 import { Pig } from "./animals/pig.js";
 import { Skybox } from "./skybox.js"
+import { PineTree } from "./pineTree.js";
 
 // scene
 const canvas = document.querySelector("canvas.webgl");
@@ -37,6 +38,10 @@ const grass = new Grass(50, 500000)
 scene.add(grass)
 const barn = new Barn();
 scene.add(barn)
+const pineTree1 = new PineTree(10, 5, 35);
+const pineTree2 = new PineTree(18, 5, 30);
+scene.add(pineTree1);
+scene.add(pineTree2);
 const pond = new Pond();
 scene.add(pond)
 const tree = new Tree();
