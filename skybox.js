@@ -4,7 +4,7 @@ import * as THREE from 'three'
 // Class for a Skybox
 export class Skybox extends THREE.Mesh{
     // Constant part of the path to Skybox textures
-    textureBasePath = "textures/daylightBox";
+    textureBasePath = "textures/skyboxOptions/skyWithGround";
 
     constructor() {
         super();
@@ -20,7 +20,7 @@ export class Skybox extends THREE.Mesh{
      * @returns - An array of file path strings
      */
     createFilePaths(fileBasePath) {
-        let fileType = ".bmp";
+        let fileType = ".png";
         let sides = ["Front", "Back", "Top", "Bottom", "Left", "Right"];
         let filePaths = [];
         // For each texture
