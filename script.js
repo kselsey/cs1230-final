@@ -51,9 +51,9 @@ const pig3 = new Pig();
 scene.add(pig1.totalPig);
 scene.add(pig2.totalPig);
 scene.add(pig3.totalPig);
-pig1.totalPig.position.set(-10, 1, 12);
-pig2.totalPig.position.set(3, 1, 20);
-pig3.totalPig.position.set(-20, 1, 40);
+pig1.totalPig.position.set(0, 1, 12);
+pig2.totalPig.position.set(-5, 1, 20);
+pig3.totalPig.position.set(-15, 1, 40);
 
 // camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);
