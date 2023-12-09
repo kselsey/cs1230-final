@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { Apple } from "./apple.js"
 
 class AppleTree extends THREE.Mesh {
   shapesList = [];
@@ -7,7 +8,7 @@ class AppleTree extends THREE.Mesh {
     super();
 
     this.makeTrunk();
-    this.makeBush();
+    this.makeBushes();
 
     this.shapesList.forEach((each) => each.translate(-2, 1.5, 8));
   }
@@ -23,7 +24,10 @@ class AppleTree extends THREE.Mesh {
     this.shapesList.push(trunk)
   }
 
-  makeBush(){
+  makeBushes(){
+    const apple = new Apple();
+    this.add(apple)
+    this.shapesList.push(apple)
     const bushMaterial = new THREE.MeshToonMaterial({color: "#0E4008"});
     const bushRadius = 7;
     for (let i=0; i<300; i++){
