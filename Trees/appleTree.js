@@ -37,6 +37,10 @@ class AppleTree extends THREE.Mesh {
             bush.translate(xOffset,7+yOffset,zOffset)
             this.add(bushMesh)
             this.shapesList.push(bush)
+            var position = new THREE.Vector3();
+            bushMesh.updateMatrixWorld();
+            bushMesh.getWorldPosition(position);
+            console.log(position.x, position.z)
             
             // apple
             const apple = new Apple();
@@ -46,12 +50,32 @@ class AppleTree extends THREE.Mesh {
             apple.translate(outX+xOffset, outY+7+yOffset, outZ+zOffset)
             this.add(apple)
             this.shapesList.push(apple)
+            var position = new THREE.Vector3();
         };
     }
   }
 
   move(x, z) {
     this.shapesList.forEach((each) => each.translate(x, 0, z));
+  }
+
+  animate(cameraPos) {
+    // this.geometry.computeBoundingBox();
+    // var boundingBox = this.geometry.boundingBox;
+    // var position = new THREE.Vector3();
+    // position.subVectors( boundingBox.max, boundingBox.min );
+    // position.multiplyScalar( 0.5 );
+    // position.add( boundingBox.min );
+
+    // position.applyMatrix4( this.matrixWorld );
+
+    var position = new THREE.Vector3();
+    this.updateMatrixWorld();
+    this.getWorldPosition(position);
+    console.log(position.x, position.z)
+    if (Math.abs(cameraPos.x-this.x)<=5 && Math.abs(cameraPos.z-this.z)<=5){
+      console.log("near tree")
+    }
   }
 }
 

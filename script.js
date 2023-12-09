@@ -39,10 +39,14 @@ scene.add(new Skybox());
 scene.add(new Barn())
 scene.add(new PineTree(10, 5, 35));
 scene.add(new PineTree(18, 5, 30));
-scene.add(new AppleTree());
+let appleTrees = []
+const appleTree1 = new AppleTree();
+scene.add(appleTree1);
+appleTrees.push(appleTree1);
 const appleTree2 = new AppleTree();
 appleTree2.move(-8,4);
-scene.add(appleTree2)
+scene.add(appleTree2);
+appleTrees.push(appleTree2);
 
 // adding animals
 const pig1 = new Pig();
@@ -131,5 +135,6 @@ renderer.setAnimationLoop((time) => {
   //controls.update(0.0001 * time); // for firstPersonControls
   grass.update(time)
   pond.animate();
+  appleTrees.forEach((each) => each.animate(camera.position));
   renderer.render(scene, camera)
 })
