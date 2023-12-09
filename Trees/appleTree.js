@@ -25,9 +25,6 @@ class AppleTree extends THREE.Mesh {
   }
 
   makeBushes(){
-    const apple = new Apple();
-    this.add(apple)
-    this.shapesList.push(apple)
     const bushMaterial = new THREE.MeshToonMaterial({color: "#0E4008"});
     const bushRadius = 7;
     for (let i=0; i<300; i++){
@@ -40,6 +37,15 @@ class AppleTree extends THREE.Mesh {
             bush.translate(xOffset,7+yOffset,zOffset)
             this.add(bushMesh)
             this.shapesList.push(bush)
+            
+            // apple
+            const apple = new Apple();
+            let outX = Math.floor((Math.random()*2)) - .5;
+            let outY = Math.floor((Math.random()*2)) - .5;
+            let outZ = Math.floor((Math.random()*2)) - .5;
+            apple.translate(outX+xOffset, outY+7+yOffset, outZ+zOffset)
+            this.add(apple)
+            this.shapesList.push(apple)
         };
     }
   }

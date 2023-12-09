@@ -21,7 +21,6 @@ class Apple extends THREE.Mesh {
     const material = new THREE.MeshToonMaterial({ color: "#B4231F" });
     const appleGeometry = new THREE.SphereGeometry(.2, 6, 6, 0, 2*Math.PI, 0, Math.PI);
     const apple = new THREE.Mesh(appleGeometry, material)
-    appleGeometry.translate(3, 0, -5);
     this.add(apple);
     this.shapesList.push(appleGeometry);
   }
@@ -31,7 +30,6 @@ class Apple extends THREE.Mesh {
     const appleGeometry = new THREE.BoxGeometry(.05, .15, .05)
     appleGeometry.translate(0,.2,0)
     const apple = new THREE.Mesh(appleGeometry, material)
-    appleGeometry.translate(3, 0, -5);
     this.add(apple);
     this.shapesList.push(appleGeometry);
   }
