@@ -3,6 +3,8 @@ import { Apple } from "./apple.js"
 
 class AppleTree extends THREE.Mesh {
   shapesList = [];
+  appleList = [];
+  position;
 
   constructor() {
     super();
@@ -11,6 +13,7 @@ class AppleTree extends THREE.Mesh {
     this.makeBushes();
 
     this.shapesList.forEach((each) => each.translate(-2, 1.5, 8));
+    this.position = new THREE.Vector3(-2,1.5,8)
   }
 
   makeTrunk(){
@@ -37,10 +40,6 @@ class AppleTree extends THREE.Mesh {
             bush.translate(xOffset,7+yOffset,zOffset)
             this.add(bushMesh)
             this.shapesList.push(bush)
-            var position = new THREE.Vector3();
-            bushMesh.updateMatrixWorld();
-            bushMesh.getWorldPosition(position);
-            console.log(position.x, position.z)
             
             // apple
             const apple = new Apple();
@@ -49,33 +48,29 @@ class AppleTree extends THREE.Mesh {
             let outZ = Math.floor((Math.random()*2)) - .5;
             apple.translate(outX+xOffset, outY+7+yOffset, outZ+zOffset)
             this.add(apple)
+            this.appleList.push(apple)
             this.shapesList.push(apple)
-            var position = new THREE.Vector3();
         };
     }
   }
 
   move(x, z) {
     this.shapesList.forEach((each) => each.translate(x, 0, z));
+    this.position.x += x;
+    this.position.z += z;
   }
 
   animate(cameraPos) {
-    // this.geometry.computeBoundingBox();
-    // var boundingBox = this.geometry.boundingBox;
-    // var position = new THREE.Vector3();
-    // position.subVectors( boundingBox.max, boundingBox.min );
-    // position.multiplyScalar( 0.5 );
-    // position.add( boundingBox.min );
-
-    // position.applyMatrix4( this.matrixWorld );
-
-    var position = new THREE.Vector3();
-    this.updateMatrixWorld();
-    this.getWorldPosition(position);
-    console.log(position.x, position.z)
-    if (Math.abs(cameraPos.x-this.x)<=5 && Math.abs(cameraPos.z-this.z)<=5){
-      console.log("near tree")
+    if (Math.abs(cameraPos.x-this.position.x*2)<=4 && Math.abs(cameraPos.z-this.position.z*2)<=4){
+      const appleIndex = Math.floor(Math.random()*this.appleList.length)*7;
+      if (appleIndex<this.appleList.length){
+        const appleToDrop = this.appleList[appleIndex];
+        if (appleToDrop && !appleToDrop.hasFallen()){
+          appleToDrop.drop();
+        }
+      }
     }
+    this.appleList.forEach((each) => each.animate());
   }
 }
 
