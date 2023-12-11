@@ -4,7 +4,7 @@ import * as THREE from 'three'
 // Class for a Skybox
 export class Skybox extends THREE.Mesh{
     // Constant part of the path to Skybox textures
-    textureBasePath = "textures/skyboxOptions/skyWithGroundPaint";
+    textureBasePath = "textures/skyboxOptions/spacePaint";
 
     constructor() {
         super();
