@@ -1,11 +1,13 @@
 import * as THREE from "three";
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import { Grass } from "./grass/grass";
 import { Barn } from "./barn";
 import { Skybox } from "./skybox.js"
 import { PineTree } from "./pineTree.js";
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
 
 // scene
 const canvas = document.querySelector("canvas.webgl");
@@ -47,6 +49,15 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 
+// Effect composer
+const composer = new EffectComposer(renderer);
+// Render scene
+const renderPass = new RenderPass(scene, camera);
+composer.addPass(renderPass);
+// Add depth of field
+const depthOfFieldPass = new BokehPass(scene, camera, {focus : 50, aperture : 0.05, maxblur : 0.0025});
+composer.addPass(depthOfFieldPass);
+
 // Camera controls
 const controls = new PointerLockControls(camera, renderer.domElement);
 controls.addEventListener("change", () => console.log("changed"));
@@ -76,9 +87,6 @@ function onKeyDown(event) {
   }
 }
 
-// const controls = new FirstPersonControls(camera, renderer.domElement);
-// controls.movementSpeed = 0.2;
-
 // const controls = new OrbitControls( camera, renderer.domElement );
 // controls.keys = {
 // 	LEFT: 'KeyA',
@@ -107,7 +115,6 @@ function onKeyDown(event) {
 
 // animate
 renderer.setAnimationLoop((time) => {
-  //controls.update(0.0001 * time); // for firstPersonControls
   grass.update(time)
-  renderer.render(scene, camera)
+  composer.render();
 })
