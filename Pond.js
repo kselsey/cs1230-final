@@ -69,6 +69,10 @@ class Pond extends THREE.Mesh {
         duck5List.forEach(each => each.position.x = each.position.x - 3);
         duck5List.forEach(each => each.position.z = each.position.z + 4);
 
+        // this.entirePond = new THREE.Group();
+        // this.entirePond.add(this.water);
+        // this.entirePond.add(this.dirt);
+
       }
       
       makeWater() {
@@ -85,8 +89,17 @@ class Pond extends THREE.Mesh {
 		mesh.receiveShadow = true;
         this.add(mesh);
 
+        const dirt_g = new THREE.CylinderGeometry( 7.5, 10.5, 1.5, 35 );
+        dirt_g.translate(-10, 0.1, 30);
+        const dirtTexture = new THREE.TextureLoader().load('textures/dirt.jpg');
+        dirtTexture.encoding = THREE.sRGBEncoding;
+        const dirt_m = new THREE.MeshStandardMaterial({ map: dirtTexture });
+        const dirt = new THREE.Mesh(dirt_g, dirt_m);
+        this.add(dirt);
+
         center_x = mesh.position.x;
         center_z = mesh.position.z
+    
     }
 
     makeDuck(list) {
