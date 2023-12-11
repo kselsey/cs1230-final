@@ -35,8 +35,6 @@ class FirstBlock extends THREE.Mesh {
             this.quack.setVolume( 0.5 );
         this.quack.isPlaying == false;
         });
-        console.log(audioLoader)
-        console.log(audioLoader2)
         audioLoader2.load( '../sounds/peppa.mp3', function( buffer ) {
             this.oink.setBuffer( buffer );
             this.oink.setLoop( true );

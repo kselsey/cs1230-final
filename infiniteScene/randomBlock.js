@@ -23,9 +23,14 @@ class RandomBlock extends THREE.Mesh {
         this.add(this.grass)
         this.allElements.push(this.grass);
 
-        const newTree = new PineTree(0,5,25);
-        this.add(newTree);
-        this.allElements.push(newTree)
+        const rand = Math.random()*8;
+        if (Math.floor(rand)==0){
+            for (let i=0; i<10; i++){
+                const newTree = new PineTree(-Math.floor(i%5)*20,5,-Math.floor(i/5)*20);
+                this.add(newTree);
+                this.allElements.push(newTree)
+            }
+        }
     }
 
     translate(x,y,z){
