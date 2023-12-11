@@ -7,6 +7,8 @@ import { AppleTree } from "../Trees/appleTree.js";
 import { Pond } from "../Pond.js";
 import { Skybox } from "../skybox.js"
 import { PineTree } from "../Trees/pineTree.js";
+import { Tractor } from "../tractor.js"
+import { Fence } from "../fence.js"
 
 class FirstBlock extends THREE.Mesh {
     grass;
@@ -48,6 +50,12 @@ class FirstBlock extends THREE.Mesh {
         appleTree2.move(-8,4);
         this.add(appleTree2);
         this.appleTrees.push(appleTree2);
+        const tractor = new Tractor();
+        tractor.translate(10,2,17)
+        this.add(tractor);
+        const fence = new Fence(5);
+        fence.translate(-15,0,5)
+        this.add(fence);
 
         // adding animals
         const pig1 = new Pig();
