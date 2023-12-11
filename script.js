@@ -9,6 +9,7 @@ import { Skybox } from "./skybox.js"
 import { PineTree } from "./Trees/pineTree.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { Pig } from "./animals/pig";
+import { Cow } from "./animals/cow.js";
 
 // scene
 const canvas = document.querySelector("canvas.webgl");
@@ -54,6 +55,16 @@ scene.add(pig3.totalPig);
 pig1.totalPig.position.set(0, 1, 12);
 pig2.totalPig.position.set(-5, 1, 20);
 pig3.totalPig.position.set(-15, 1, 40);
+
+const cow1 = new Cow();
+const cow2 = new Cow();
+const cow3 = new Cow();
+scene.add(cow1.totalCow);
+scene.add(cow2.totalCow);
+scene.add(cow3.totalCow);
+cow1.totalCow.position.set(3, 1, 30)
+cow2.totalCow.position.set(10, 1, 15)
+cow3.totalCow.position.set(15, 1, 20);
 
 // camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);
