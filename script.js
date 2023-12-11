@@ -1,14 +1,11 @@
 import * as THREE from "three";
 
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
-import { Grass } from "./grass/grass";
-import { Barn } from "./barn";
-import { AppleTree } from "./Trees/appleTree.js";
-import { Pond } from "./Pond";
+import { FullScene } from "./infiniteScene/fullScene.js"
 import { Skybox } from "./skybox.js"
-import { PineTree } from "./Trees/pineTree.js";
+import { FirstBlock } from "./infiniteScene/firstBlock.js"
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { Pig } from "./animals/pig";
+
 
 // scene
 const canvas = document.querySelector("canvas.webgl");
@@ -18,46 +15,13 @@ const sizes = {
   height: window.innerHeight,
 };
 
-// lighting
-//const light = new THREE.DirectionalLight("white", 10);
-//light.position.set(1,2,1)
-//light.position.set(-5, 5, 32);
-const light = new THREE.PointLight("white", 200)
-light.position.set(-5, 15, 20);
-light.decay = 1.5;
-light.castShadow = true;
-scene.add(light)
-const ambient_lighting = new THREE.AmbientLight(0x404040, 10)
-scene.add(ambient_lighting)
+// const block = new FirstBlock();
+// scene.add(block)
 
-// adding objects
-const grass = new Grass(50, 500000)
-scene.add(grass)
-const pond = new Pond();
-scene.add(pond)
+const fullScene = new FullScene();
+scene.add(fullScene);
 scene.add(new Skybox());
-scene.add(new Barn())
-scene.add(new PineTree(10, 5, 35));
-scene.add(new PineTree(18, 5, 30));
-let appleTrees = []
-const appleTree1 = new AppleTree();
-scene.add(appleTree1);
-appleTrees.push(appleTree1);
-const appleTree2 = new AppleTree();
-appleTree2.move(-8,4);
-scene.add(appleTree2);
-appleTrees.push(appleTree2);
 
-// adding animals
-const pig1 = new Pig();
-const pig2 = new Pig();
-const pig3 = new Pig();
-scene.add(pig1.totalPig);
-scene.add(pig2.totalPig);
-scene.add(pig3.totalPig);
-pig1.totalPig.position.set(0, 1, 12);
-pig2.totalPig.position.set(-5, 1, 20);
-pig3.totalPig.position.set(-15, 1, 40);
 
 // camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);
@@ -101,9 +65,6 @@ function onKeyDown(event) {
   }
 }
 
-// const controls = new FirstPersonControls(camera, renderer.domElement);
-// controls.movementSpeed = 0.2;
-
 // const controls = new OrbitControls( camera, renderer.domElement );
 // controls.keys = {
 // 	LEFT: 'KeyA',
@@ -132,9 +93,6 @@ function onKeyDown(event) {
 
 // animate
 renderer.setAnimationLoop((time) => {
-  //controls.update(0.0001 * time); // for firstPersonControls
-  grass.update(time)
-  pond.animate();
-  appleTrees.forEach((each) => each.animate(camera.position));
+  fullScene.animate(time, camera.position)
   renderer.render(scene, camera)
 })

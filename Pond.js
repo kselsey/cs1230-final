@@ -75,7 +75,7 @@ class Pond extends THREE.Mesh {
         
         const geometry = new THREE.CircleGeometry( 7, 24 );
         geometry.rotateX(-Math.PI/2)
-        geometry.translate(-10, 0.9, 30);
+        geometry.translate(-10, .93, 30);
         const waterTexture = new THREE.TextureLoader().load('textures/pond.svg');
         waterTexture.encoding = THREE.sRGBEncoding;
         const material = new THREE.MeshStandardMaterial({ map: waterTexture });

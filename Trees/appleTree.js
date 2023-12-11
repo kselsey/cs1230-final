@@ -61,7 +61,7 @@ class AppleTree extends THREE.Mesh {
   }
 
   animate(cameraPos) {
-    if (Math.abs(cameraPos.x-this.position.x*2)<=4 && Math.abs(cameraPos.z-this.position.z*2)<=4){
+    if (Math.abs(cameraPos.x-this.position.x*2)<=5 && Math.abs(cameraPos.z-this.position.z*2)<=5){
       const appleIndex = Math.floor(Math.random()*this.appleList.length)*7;
       if (appleIndex<this.appleList.length){
         const appleToDrop = this.appleList[appleIndex];

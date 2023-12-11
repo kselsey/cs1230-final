@@ -14,7 +14,7 @@ class Barn extends THREE.Mesh {
     this.shapesList.forEach((each) => each.translate(12, 3, 8));
   }
 
-  translate(x, z) {
+  translate(x, y, z) {
     this.shapesList.forEach((each) => each.translate(x, 0, z));
   }
 
