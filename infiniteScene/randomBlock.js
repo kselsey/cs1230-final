@@ -39,6 +39,15 @@ class RandomBlock extends THREE.Mesh {
     getVertOffset(){ return this.vertOffset? this.vertOffset : 0 }
 
     animate(time, cameraPos){
+        function check_if_should_make_noise(animal_x, animal_z, offset){
+            if(camera.position.z > animal_z - offset && camera.position.z < animal_z + offset 
+              && camera.position.x > animal_x - offset && camera.position.x <animal_x + offset){
+                return true;
+              } else {
+                return false;
+              }
+          }
+
         this.grass.update(time)
         this.pondList.forEach((pond) => pond.animate());
         this.appleTrees.forEach((tree) => tree.animate(cameraPos));

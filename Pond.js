@@ -79,7 +79,7 @@ class Pond extends THREE.Mesh {
         
         const geometry = new THREE.CircleGeometry( 7, 24 );
         geometry.rotateX(-Math.PI/2)
-        geometry.translate(-10, .93, 30);
+        geometry.translate(-10, 1, 30);
         const waterTexture = new THREE.TextureLoader().load('textures/pond.svg');
         waterTexture.encoding = THREE.sRGBEncoding;
         const material = new THREE.MeshStandardMaterial({ map: waterTexture });
@@ -90,7 +90,7 @@ class Pond extends THREE.Mesh {
         this.add(mesh);
 
         const dirt_g = new THREE.CylinderGeometry( 7.5, 10.5, 1.5, 35 );
-        dirt_g.translate(-10, 0.1, 30);
+        dirt_g.translate(-10, 0.2, 30);
         const dirtTexture = new THREE.TextureLoader().load('textures/dirt.jpg');
         dirtTexture.encoding = THREE.sRGBEncoding;
         const dirt_m = new THREE.MeshStandardMaterial({ map: dirtTexture });

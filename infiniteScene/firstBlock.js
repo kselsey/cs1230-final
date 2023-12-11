@@ -17,8 +17,32 @@ class FirstBlock extends THREE.Mesh {
     horzOffset;
     vertOffset;
 
-    constructor(){
+    quack;
+    oink;
+    pigs = [];
+
+    constructor(listener){
         super();
+
+        // Prepare the animal sounds
+        this.quack = new THREE.Audio( listener );
+        this.oink = new THREE.Audio( listener );
+        const audioLoader = new THREE.AudioLoader();
+        const audioLoader2 = new THREE.AudioLoader();
+        audioLoader.load( '../sounds/quacking.mp3', function( buffer ) {
+            this.quack.setBuffer( buffer );
+            this.quack.setLoop( true );
+            this.quack.setVolume( 0.5 );
+        this.quack.isPlaying == false;
+        });
+        console.log(audioLoader)
+        console.log(audioLoader2)
+        audioLoader2.load( '../sounds/peppa.mp3', function( buffer ) {
+            this.oink.setBuffer( buffer );
+            this.oink.setLoop( true );
+            this.oink.setVolume( 0.5 );
+          this.oink.isPlaying == false;
+        });
 
         this.makeScene();
     }
@@ -64,12 +88,48 @@ class FirstBlock extends THREE.Mesh {
         this.add(pig1.totalPig);
         this.add(pig2.totalPig);
         this.add(pig3.totalPig);
+        this.pigs.push(pig1.body);
+        this.pigs.push(pig2.body);
+        this.pigs.push(pig3.body);
         pig1.totalPig.position.set(0, 1, 12);
         pig2.totalPig.position.set(-5, 1, 20);
         pig3.totalPig.position.set(-15, 1, 40);
     }
 
     animate(time, cameraPos){
+        function check_if_should_make_noise(animal_x, animal_z, offset){
+            if(cameraPos.z > animal_z - offset && cameraPos.z < animal_z + offset 
+                && cameraPos.x > animal_x - offset && cameraPos.x <animal_x + offset){
+                return true;
+                } else {
+                return false;
+                }
+            }
+
+        var makePigNoise = false;
+        for (let i=0; i<this.pigs.length; i++){
+            var pigPos = new THREE.Vector3();
+            this.pigs[i].getWorldPosition( pigPos );
+            if (check_if_should_make_noise(pigPos.x, pigPos.z, 3)){
+                makePigNoise = true;
+        }
+        if (makePigNoise){
+            if(this.oink.isPlaying == false){
+                this.oink.play();
+              }
+            } else {
+              this.oink.pause();
+            }
+        }
+
+        if(cameraPos.z > 23 && cameraPos.z < 37 && cameraPos.x > -17 && cameraPos.x < -2){
+            if(this.quack.isPlaying == false){
+              this.quack.play();
+            }
+          } else {
+            this.quack.pause();
+        }
+
         this.grass.update(time)
         this.pond.animate();
         this.appleTrees.forEach((each) => each.animate(cameraPos));

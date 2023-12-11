@@ -9,14 +9,10 @@ class FullScene extends THREE.Mesh {
     lastHorzMove;
     lastVertMove;
 
-    constructor(){
+    constructor(listener){
         super();
 
-        this.makeInitialArray();
-    }
-
-    makeInitialArray() {
-        const mainBlock = new FirstBlock();
+        const mainBlock = new FirstBlock(listener);
         this.add(mainBlock);
         this.blockArray[4] = mainBlock;
         for (let i=0; i<9; i++){
