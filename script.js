@@ -108,9 +108,11 @@ function onKeyDown(event) {
     if (skybox.textureBasePath == "textures/skyboxOptions/daytimeSmooth") {
       skybox.textureBasePath = "textures/skyboxOptions/nighttimeSmooth";
       skybox.material = skybox.createMaterialArray(skybox.textureBasePath);
+      light.intensity = 0.75;
     } else {
       skybox.textureBasePath = "textures/skyboxOptions/daytimeSmooth";
       skybox.material = skybox.createMaterialArray(skybox.textureBasePath);
+      light.intensity = 1.0;
     }
   }
 }
