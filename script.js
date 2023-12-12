@@ -18,13 +18,17 @@ const sizes = {
 };
 
 // lighting
-const light = new THREE.DirectionalLight("#f9fae1", 10)
-light.position.set(1,2,1)
+const light = new THREE.PointLight("#f9fae1", 250)
+light.position.set(-5, 15, 20);
+light.decay = 1.5;
+light.castShadow = true;
 scene.add(light)
-const nightLight = new THREE.DirectionalLight("#dae5f5", 1);
-nightLight.position.set(1, 2, 1);
 const ambient_lighting = new THREE.AmbientLight(0x404040, 10)
 scene.add(ambient_lighting)
+const nightLight = new THREE.PointLight("#dae5f5", 50);
+nightLight.position.set(-5, 15, 20);
+nightLight.decay = 1.5;
+nightLight.castShadow = true;
 
 // adding objects
 const skybox = new Skybox();

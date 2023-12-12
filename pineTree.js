@@ -35,7 +35,7 @@ export class PineTree extends THREE.Mesh{
      * Creates the leaves for the pine tree
      */
     makeLeaves() {
-        let leafMaterial = new THREE.MeshToonMaterial({color : "#0c5a31"})
+        let leafMaterial = new THREE.MeshToonMaterial({color : "#138549"})
         for (let i = 0; i < 7; i++) {
             let leafGeometry = new THREE.ConeGeometry(2 - (i * 0.20), 3, 32, 4, false, 0, 2 * Math.PI)
             leafGeometry.translate(0, -1 + (i * 1), 0)
