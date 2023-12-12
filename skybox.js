@@ -8,10 +8,9 @@ export class Skybox extends THREE.Mesh{
 
     constructor() {
         super();
-        let skyboxGeometry = new THREE.BoxGeometry(10000, 10000, 10000);
-        let skyboxMaterials = this.createMaterialArray(this.textureBasePath);
         // Create skybox mesh
-        this.add(new THREE.Mesh(skyboxGeometry, skyboxMaterials));
+        this.geometry = new THREE.BoxGeometry(10000, 10000, 10000);
+        this.material = this.createMaterialArray(this.textureBasePath);
     }
 
     /**

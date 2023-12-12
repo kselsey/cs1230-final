@@ -103,6 +103,16 @@ function onKeyDown(event) {
   if (keyCode == 65) {
     controls.moveRight(-2 * offset);
   }
+  // If T, change skybox
+  if (keyCode == 84) {
+    if (skybox.textureBasePath == "textures/skyboxOptions/daytimeSmooth") {
+      skybox.textureBasePath = "textures/skyboxOptions/nighttimeSmooth";
+      skybox.material = skybox.createMaterialArray(skybox.textureBasePath);
+    } else {
+      skybox.textureBasePath = "textures/skyboxOptions/daytimeSmooth";
+      skybox.material = skybox.createMaterialArray(skybox.textureBasePath);
+    }
+  }
 }
 
 // Resize scene on window resize
