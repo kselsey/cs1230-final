@@ -9,6 +9,7 @@ import { Skybox } from "./skybox.js"
 import { PineTree } from "./Trees/pineTree.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { Pig } from "./animals/pig";
+import { Cow } from "./animals/cow.js";
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
@@ -59,6 +60,16 @@ scene.add(pig3.totalPig);
 pig1.totalPig.position.set(0, 1, 12);
 pig2.totalPig.position.set(-5, 1, 20);
 pig3.totalPig.position.set(-15, 1, 40);
+
+const cow1 = new Cow();
+const cow2 = new Cow();
+const cow3 = new Cow();
+scene.add(cow1.totalCow);
+scene.add(cow2.totalCow);
+scene.add(cow3.totalCow);
+cow1.totalCow.position.set(3, 1, 30)
+cow2.totalCow.position.set(10, 1, 15)
+cow3.totalCow.position.set(15, 1, 20);
 
 // camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);
@@ -154,8 +165,52 @@ function onResizeCanvas() {
   renderer.setSize(sizes.width, sizes.height);
 }
 
+const listener = new THREE.AudioListener();
+camera.add(listener);
+const moo = new THREE.Audio(listener);
+const audioLoader3 = new THREE.AudioLoader();
+audioLoader3.load('animals/utils/moo.mp3', function(buffer) {
+  moo.setBuffer(buffer);
+  moo.setLoop(true);
+  moo.setVolume(0.5);
+moo.isPlaying == false;
+});
+
+var cow1Pos = new THREE.Vector3();
+cow1.body.getWorldPosition(cow1Pos);
+var cow2Pos = new THREE.Vector3();
+cow2.body.getWorldPosition(cow2Pos);
+var cow3Pos = new THREE.Vector3();
+cow3.body.getWorldPosition(cow3Pos);
+
 // animate
 renderer.setAnimationLoop((time) => {
+  //controls.update(0.0001 * time); // for firstPersonControls
+  function check_if_should_make_noise(animal_x, animal_z, offset) {
+    if (camera.position.z > animal_z - offset && camera.position.z < animal_z + offset 
+      && camera.position.x > animal_x - offset && camera.position.x <animal_x + offset) {
+        return true;
+      }
+      else {
+        return false;
+      }
+  }
+
+  grass.update(time)
+  pond.animate();
+  renderer.render(scene, camera)
+
+  var closeToCow1 = check_if_should_make_noise(cow1Pos.x, cow1Pos.z, 3);
+  var closeToCow2 = check_if_should_make_noise(cow2Pos.x, cow2Pos.z, 3);
+  var closeToCow3 = check_if_should_make_noise(cow3Pos.x, cow3Pos.z, 3);
+
+  if (closeToCow1 || closeToCow2 || closeToCow3) {
+    if (moo.isPlaying == false) {
+      moo.play();
+    }
+  } else {
+    moo.pause();
+  }
   grass.update(time)
   pond.animate();
   composer.render();
