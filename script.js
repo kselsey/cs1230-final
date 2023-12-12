@@ -137,10 +137,50 @@ function onKeyDown(event) {
 //   }
 // }
 
+const listener = new THREE.AudioListener();
+camera.add(listener);
+const moo = new THREE.Audio(listener);
+const audioLoader3 = new THREE.AudioLoader();
+audioLoader3.load('animals/utils/moo.mp3', function(buffer) {
+  moo.setBuffer(buffer);
+  moo.setLoop(true);
+  moo.setVolume(0.5);
+moo.isPlaying == false;
+});
+
+var cow1Pos = new THREE.Vector3();
+cow1.body.getWorldPosition(cow1Pos);
+var cow2Pos = new THREE.Vector3();
+cow2.body.getWorldPosition(cow2Pos);
+var cow3Pos = new THREE.Vector3();
+cow3.body.getWorldPosition(cow3Pos);
+
 // animate
 renderer.setAnimationLoop((time) => {
   //controls.update(0.0001 * time); // for firstPersonControls
+  function check_if_should_make_noise(animal_x, animal_z, offset) {
+    if (camera.position.z > animal_z - offset && camera.position.z < animal_z + offset 
+      && camera.position.x > animal_x - offset && camera.position.x <animal_x + offset) {
+        return true;
+      }
+      else {
+        return false;
+      }
+  }
+
   grass.update(time)
   pond.animate();
   renderer.render(scene, camera)
+
+  var closeToCow1 = check_if_should_make_noise(cow1Pos.x, cow1Pos.z, 3);
+  var closeToCow2 = check_if_should_make_noise(cow2Pos.x, cow2Pos.z, 3);
+  var closeToCow3 = check_if_should_make_noise(cow3Pos.x, cow3Pos.z, 3);
+
+  if (closeToCow1 || closeToCow2 || closeToCow3) {
+    if (moo.isPlaying == false) {
+      moo.play();
+    }
+  } else {
+    moo.pause();
+  }
 })
