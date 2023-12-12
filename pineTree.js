@@ -23,7 +23,8 @@ export class PineTree extends THREE.Mesh{
         let trunkTexture = new THREE.TextureLoader().load("textures/treeBark.jpg")
         trunkTexture.wrapS = THREE.RepeatWrapping;
         trunkTexture.wrapT = THREE.RepeatWrapping;
-        let trunkMaterial = new THREE.MeshToonMaterial({color : "#43260a", map : trunkTexture})
+        trunkTexture.repeat.set(1, 2);
+        let trunkMaterial = new THREE.MeshToonMaterial({color : "#7a5227", map : trunkTexture})
         let trunkGeometry = new THREE.CylinderGeometry(0.25, 0.5, 10, 32, 1, false, 0, 2 * Math.PI)
         let trunkMesh = new THREE.Mesh(trunkGeometry, trunkMaterial)
         this.shapesList.push(trunkGeometry)

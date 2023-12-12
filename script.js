@@ -18,9 +18,11 @@ const sizes = {
 };
 
 // lighting
-const light = new THREE.DirectionalLight("white", 10)
+const light = new THREE.DirectionalLight("#f9fae1", 10)
 light.position.set(1,2,1)
 scene.add(light)
+const nightLight = new THREE.DirectionalLight("#dae5f5", 1);
+nightLight.position.set(1, 2, 1);
 const ambient_lighting = new THREE.AmbientLight(0x404040, 10)
 scene.add(ambient_lighting)
 
@@ -108,11 +110,13 @@ function onKeyDown(event) {
     if (skybox.textureBasePath == "textures/skyboxOptions/daytimeSmooth") {
       skybox.textureBasePath = "textures/skyboxOptions/nighttimeSmooth";
       skybox.material = skybox.createMaterialArray(skybox.textureBasePath);
-      light.intensity = 0.75;
+      scene.remove(light);
+      scene.add(nightLight);
     } else {
       skybox.textureBasePath = "textures/skyboxOptions/daytimeSmooth";
       skybox.material = skybox.createMaterialArray(skybox.textureBasePath);
-      light.intensity = 1.0;
+      scene.remove(nightLight);
+      scene.add(light);
     }
   }
 }
