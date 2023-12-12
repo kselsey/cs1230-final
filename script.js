@@ -80,6 +80,9 @@ function showMenu() {
   controls.style.display = "flex";
 }
 
+const skybox = new Skybox();
+scene.add(skybox);
+
 function onKeyDown(event) {
   var keyCode = event.which;
   var offset = 0.08;
@@ -129,7 +132,6 @@ function onResizeCanvas() {
 // scene
 const fullScene = new FullScene(listener);
 scene.add(fullScene);
-scene.add(new Skybox());
 
 // animate
 renderer.setAnimationLoop((time) => {
