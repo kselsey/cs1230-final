@@ -4,14 +4,13 @@ import * as THREE from 'three'
 // Class for a Skybox
 export class Skybox extends THREE.Mesh{
     // Constant part of the path to Skybox textures
-    textureBasePath = "textures/skyboxOptions/skyWithGroundPaint";
+    textureBasePath = "textures/skyboxOptions/daytimeSmooth";
 
     constructor() {
         super();
-        let skyboxGeometry = new THREE.BoxGeometry(10000, 10000, 10000);
-        let skyboxMaterials = this.createMaterialArray(this.textureBasePath);
         // Create skybox mesh
-        this.add(new THREE.Mesh(skyboxGeometry, skyboxMaterials));
+        this.geometry = new THREE.BoxGeometry(10000, 10000, 10000);
+        this.material = this.createMaterialArray(this.textureBasePath);
     }
 
     /**
@@ -21,7 +20,7 @@ export class Skybox extends THREE.Mesh{
      */
     createFilePaths(fileBasePath) {
         let fileType = ".png";
-        let sides = ["Front", "Back", "Top", "Bottom", "Left", "Right"];
+        let sides = ["Front", "Back", "Top", "Bottom", "Right", "Left"];
         let filePaths = [];
         // For each texture
         for (let side in sides) {

@@ -1,0 +1,34 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#menu {
+    background-color: lightgrey;
+    opacity: 0.75;
+
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    font-size: 36px;
+}
+
+#controls {
+    font-size: 14px;
+}

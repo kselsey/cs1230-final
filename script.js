@@ -10,6 +10,9 @@ import { PineTree } from "./Trees/pineTree.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { Pig } from "./animals/pig";
 import { Cow } from "./animals/cow.js";
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
 
 // scene
 const canvas = document.querySelector("canvas.webgl");
@@ -20,23 +23,25 @@ const sizes = {
 };
 
 // lighting
-//const light = new THREE.DirectionalLight("white", 10);
-//light.position.set(1,2,1)
-//light.position.set(-5, 5, 32);
-const light = new THREE.PointLight("white", 200)
+const light = new THREE.PointLight("#f9fae1", 250)
 light.position.set(-5, 15, 20);
 light.decay = 1.5;
 light.castShadow = true;
 scene.add(light)
 const ambient_lighting = new THREE.AmbientLight(0x404040, 10)
 scene.add(ambient_lighting)
+const nightLight = new THREE.PointLight("#dae5f5", 50);
+nightLight.position.set(-5, 15, 20);
+nightLight.decay = 1.5;
+nightLight.castShadow = true;
 
 // adding objects
 const grass = new Grass(50, 500000)
 scene.add(grass)
 const pond = new Pond();
 scene.add(pond)
-scene.add(new Skybox());
+const skybox = new Skybox();
+scene.add(skybox);
 scene.add(new Barn())
 scene.add(new PineTree(10, 5, 35));
 scene.add(new PineTree(18, 5, 30));
@@ -82,11 +87,38 @@ renderer.setSize(sizes.width, sizes.height);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.BasicShadowMap;
 
+// Effect composer
+const composer = new EffectComposer(renderer);
+// Render scene
+const renderPass = new RenderPass(scene, camera);
+composer.addPass(renderPass);
+// Add depth of field
+const depthOfFieldPass = new BokehPass(scene, camera, {focus: 50, aperture: 0.05, maxblur: 0.0025});
+composer.addPass(depthOfFieldPass);
+
 // Camera controls
 const controls = new PointerLockControls(camera, renderer.domElement);
+// Hide menu when locked, else show menu
+controls.addEventListener("lock", () => hideMenu());
+controls.addEventListener("unlock", () => showMenu());
 // Lock pointer on mouse click (unlock with escape)
 document.addEventListener("mousedown", () => controls.lock());
 document.addEventListener("keydown", onKeyDown, false);
+
+function hideMenu() {
+  let menu = document.getElementById("menu");
+  let controls = document.getElementById("controls");
+  menu.style.display = "none";
+  controls.style.display = "none";
+}
+
+function showMenu() {
+  let menu = document.getElementById("menu");
+  let controls = document.getElementById("controls");
+  menu.style.display = "flex";
+  controls.style.display = "flex";
+}
+
 function onKeyDown(event) {
   var keyCode = event.which;
   var offset = 0.08;
@@ -106,36 +138,32 @@ function onKeyDown(event) {
   if (keyCode == 65) {
     controls.moveRight(-2 * offset);
   }
+  // If T, change skybox
+  if (keyCode == 84) {
+    if (skybox.textureBasePath == "textures/skyboxOptions/daytimeSmooth") {
+      skybox.textureBasePath = "textures/skyboxOptions/nighttimeSmooth";
+      skybox.material = skybox.createMaterialArray(skybox.textureBasePath);
+      light.intensity = 50;
+    } else {
+      skybox.textureBasePath = "textures/skyboxOptions/daytimeSmooth";
+      skybox.material = skybox.createMaterialArray(skybox.textureBasePath);
+      light.intensity = 250;
+    }
+  }
 }
 
-// const controls = new FirstPersonControls(camera, renderer.domElement);
-// controls.movementSpeed = 0.2;
+// Resize scene on window resize
+window.addEventListener("resize", () => onResizeCanvas());
 
-// const controls = new OrbitControls( camera, renderer.domElement );
-// controls.keys = {
-// 	LEFT: 'KeyA',
-// 	UP: 'KeyQ',
-// 	RIGHT: 'KeyD',
-// 	BOTTOM: 'KeyE'
-// }
-// controls.listenToKeyEvents(document);
-// document.addEventListener("keydown", onKeyDown, false);
-// function onKeyDown(event) {
-//   var keyCode = event.which;
-//   var offset = .2;
-//   var up = new THREE.Vector3();
-//   up.copy(camera.up).applyQuaternion(camera.quaternion);
-//   camera.getWorldDirection(camera.lookAtVector);
-//   if (keyCode == 87) { // W key
-//     camera.position.x += camera.lookAtVector.x*offset;
-//     camera.position.y += camera.lookAtVector.y*offset;
-//     camera.position.z += camera.lookAtVector.z*offset;
-//   } if (keyCode == 83) { // S key
-//     camera.position.x -= camera.lookAtVector.x*offset;
-//     camera.position.y -= camera.lookAtVector.y*offset;
-//     camera.position.z -= camera.lookAtVector.z*offset;
-//   }
-// }
+function onResizeCanvas() {
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
+
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(sizes.width, sizes.height);
+}
 
 const listener = new THREE.AudioListener();
 camera.add(listener);
@@ -183,4 +211,7 @@ renderer.setAnimationLoop((time) => {
   } else {
     moo.pause();
   }
+  grass.update(time)
+  pond.animate();
+  composer.render();
 })
