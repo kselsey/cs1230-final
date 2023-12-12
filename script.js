@@ -86,8 +86,7 @@ lily5.shape.rotateX(-Math.PI/2);
 lily5.shape.rotateZ(Math.PI/3);
 lily5.shape.position.set(-13, 0.92, 27);
 
-// adding flower
-// Source:
+// adding white flower
 // This work is based on "white flower" (https://sketchfab.com/3d-models/white-flower-9e025b18a39741a4a38b197cee3cdcac)
 // by tojamerlin (https://sketchfab.com/tojamerlin) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 const loader = new GLTFLoader();
@@ -101,6 +100,26 @@ loader.load("./white_flower/scene.gltf", function(gltf){
   flower2.position.set(-3, 0.75, 31)
   flower3.position.set(9, 0.5, 14.5)
   flower4.position.set(14, 0.5, 14.5)
+  scene.add(flower1);
+  scene.add(flower2);
+  scene.add(flower3);
+  scene.add(flower4);
+});
+
+// adding white flower
+// This work is based on "flower" (https://sketchfab.com/3d-models/flower-0fa50cf622f44f2ba59eff6c11cb8fbd)
+// by tojamerlin (https://sketchfab.com/tojamerlin) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+const loader2 = new GLTFLoader();
+loader2.load("./orange_flower/scene.gltf", function(gltf){
+  const flower1 = gltf.scene;
+  flower1.scale.set(0.01, 0.01, 0.01)
+  const flower2 = flower1.clone()
+  const flower3 = flower1.clone()
+  const flower4 = flower1.clone()
+  flower1.position.set(8, 0.75, 28)
+  flower2.position.set(5, 0.75, 30)
+  flower3.position.set(9, 0.5, 20.5)
+  flower4.position.set(25, 0.5, 35)
   scene.add(flower1);
   scene.add(flower2);
   scene.add(flower3);
