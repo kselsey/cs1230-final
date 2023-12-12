@@ -25,7 +25,8 @@ class FullScene extends THREE.Mesh {
     }
 
     animate(time, cameraPos){
-        this.blockArray.forEach((block) => block.animate(time, cameraPos));
+      //  this.blockArray.forEach((block) => block.animate(time, cameraPos));
+        this.blockArray[4].animate(time, cameraPos)
         const zDiff = cameraPos.z<0? 50-Math.abs(cameraPos.z)%50 : cameraPos.z%50;
         const xDiff = cameraPos.x+25<0? 50-Math.abs(cameraPos.x+25)%50 : (cameraPos.x+25)%50;
         const horzMovement = cameraPos.x-this.lastCameraPos.x;

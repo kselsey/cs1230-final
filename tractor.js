@@ -7,6 +7,8 @@ class Tractor extends THREE.Mesh {
     super();
 
     this.makeBody();
+    this.makeWindow(true);
+    this.makeWindow(false);
     this.makeWheels(true);
     this.makeWheels(false);
   }
@@ -36,6 +38,34 @@ class Tractor extends THREE.Mesh {
     const stemMesh = new THREE.Mesh(stem, new THREE.MeshToonMaterial({color: "black"}))
     this.add(stemMesh)
     this.shapesList.push(stem)
+  }
+
+  makeWindow(upper){
+    const mat = new THREE.MeshToonMaterial({color: "black"})
+
+    const top = new THREE.BoxGeometry(.1,.1,1)
+    top.translate(upper? -1 : -2.5, upper? 1.2 : -.3 , 0);
+    const topMesh = new THREE.Mesh(top, mat)
+    this.add(topMesh)
+    this.shapesList.push(top)
+
+    const bottom = new THREE.BoxGeometry(.1,.1,1)
+    bottom.translate(upper? -1 : -2.5, upper? .6 : -.9, 0)
+    const bottomMesh = new THREE.Mesh(bottom, mat)
+    this.add(bottomMesh)
+    this.shapesList.push(bottom)
+
+    const left = new THREE.BoxGeometry(.1,.6,.1)
+    left.translate(upper? -1 : -2.5, upper? .9 : -.6, -.5)
+    const leftMesh = new THREE.Mesh(left, mat)
+    this.add(leftMesh)
+    this.shapesList.push(left)
+
+    const right = new THREE.BoxGeometry(.1,.6,.1)
+    right.translate(upper? -1 : -2.5, upper? .9 : -.6, .5)
+    const rightMesh = new THREE.Mesh(right, mat)
+    this.add(rightMesh)
+    this.shapesList.push(right)
   }
 
   makeWheels(left){

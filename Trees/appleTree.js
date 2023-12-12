@@ -54,9 +54,10 @@ class AppleTree extends THREE.Mesh {
     }
   }
 
-  move(x, z) {
-    this.shapesList.forEach((each) => each.translate(x, 0, z));
+  translate(x, y, z) {
+    this.shapesList.forEach((each) => each.translate(x, y, z));
     this.position.x += x;
+    this.position.y += y;
     this.position.z += z;
   }
 

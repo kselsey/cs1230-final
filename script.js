@@ -106,8 +106,8 @@ scene.add(new Skybox());
 
 // animate
 renderer.setAnimationLoop((time) => {
- // renderer.render(scene, camera)
+  renderer.render(scene, camera)
   fullScene.animate(time, camera.position)
-  composer.render();
+ // composer.render();
 
 })

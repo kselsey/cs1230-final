@@ -69,14 +69,14 @@ class FirstBlock extends THREE.Mesh {
         this.add(appleTree1);
         this.appleTrees.push(appleTree1);
         const appleTree2 = new AppleTree();
-        appleTree2.move(-8,4);
+        appleTree2.translate(-8,0,4);
         this.add(appleTree2);
         this.appleTrees.push(appleTree2);
         const tractor = new Tractor();
         tractor.translate(10,2,17)
         this.add(tractor);
-        const fence = new Fence(5);
-        fence.translate(-15,0,5)
+        const fence = new Fence(6);
+        fence.translate(-20,0,0)
         this.add(fence);
 
         // adding animals
