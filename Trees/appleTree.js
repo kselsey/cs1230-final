@@ -35,6 +35,7 @@ class AppleTree extends THREE.Mesh {
         const yOffset = -bushRadius/2 + Math.random()*bushRadius;
         const zOffset = -bushRadius/2 + Math.random()*bushRadius;
         if (Math.sqrt(Math.pow(xOffset,2)+Math.pow(yOffset,2)+Math.pow(zOffset,2))<=bushRadius/2){
+          if (Math.abs(xOffset)>.3 && Math.abs(yOffset)>.3 && Math.abs(zOffset)>.3){
             const bush = new THREE.SphereGeometry(1, 5, 5, 0, 2*Math.PI, 0, Math.PI)
             const bushMesh = new THREE.Mesh(bush, bushMaterial);
             bush.translate(xOffset,7+yOffset,zOffset)
@@ -50,6 +51,7 @@ class AppleTree extends THREE.Mesh {
             this.add(apple)
             this.appleList.push(apple)
             this.shapesList.push(apple)
+          }
         };
     }
   }

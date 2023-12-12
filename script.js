@@ -38,6 +38,15 @@ renderer.setSize(sizes.width, sizes.height);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.BasicShadowMap;
 
+// lighting
+const light = new THREE.PointLight("white", 200)
+light.position.set(-5, 15, 20);
+light.decay = 1.5;
+light.castShadow = true;
+scene.add(light)
+const ambient_lighting = new THREE.AmbientLight(0x404040, 10)
+scene.add(ambient_lighting)
+
 // Effect composer
 const composer = new EffectComposer(renderer);
 // Render scene

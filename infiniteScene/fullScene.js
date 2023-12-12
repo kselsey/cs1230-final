@@ -8,16 +8,18 @@ class FullScene extends THREE.Mesh {
     lastCameraPos = new THREE.Vector3();
     lastHorzMove;
     lastVertMove;
+    myListener;
 
     constructor(listener){
         super();
+        this.myListener = listener;
 
-        const mainBlock = new FirstBlock(listener);
+        const mainBlock = new FirstBlock(this.myListener);
         this.add(mainBlock);
         this.blockArray[4] = mainBlock;
         for (let i=0; i<9; i++){
             if (i!=4){
-                this.blockArray[i] = new RandomBlock();
+                this.blockArray[i] = new RandomBlock(this.myListener);
                 this.add(this.blockArray[i]);
                 this.blockArray[i].translate(-50*(i%3-1),0,-50*(Math.floor(i/3)-1))
             }
@@ -39,7 +41,7 @@ class FullScene extends THREE.Mesh {
             for (let i=0; i<9; i++){
                 if (i%3==2){
                     this.blockArray[i].delete();
-                    newArr[i-2] = new RandomBlock();
+                    newArr[i-2] = new RandomBlock(this.myListener);
                     newArr[i-2].translate(this.blockArray[i-2].getHorzOffset()+50, 0, this.blockArray[i].getVertOffset())
                     this.add(newArr[i-2]);
                 }
@@ -54,7 +56,7 @@ class FullScene extends THREE.Mesh {
             for (let i=0; i<9; i++){
                 if (i%3==0){
                     this.blockArray[i].delete();
-                    newArr[i+2] = new RandomBlock();
+                    newArr[i+2] = new RandomBlock(this.myListener);
                     newArr[i+2].translate(this.blockArray[i+2].getHorzOffset()-50, 0, this.blockArray[i].getVertOffset())
                     this.add(newArr[i+2]);
                 }
@@ -73,7 +75,7 @@ class FullScene extends THREE.Mesh {
             for (let i=0; i<9; i++){
                 if (Math.floor(i/3)==0){
                     this.blockArray[i].delete();
-                    newArr[i+6] = new RandomBlock();
+                    newArr[i+6] = new RandomBlock(this.myListener);
                     newArr[i+6].translate(this.blockArray[i].getHorzOffset(), 0, this.blockArray[i+6].getVertOffset()-50)
                     this.add(newArr[i+6]);
                 }
@@ -88,7 +90,7 @@ class FullScene extends THREE.Mesh {
             for (let i=0; i<9; i++){
                 if (Math.floor(i/3)==2){
                     this.blockArray[i].delete();
-                    newArr[i-6] = new RandomBlock();
+                    newArr[i-6] = new RandomBlock(this.myListener);
                     newArr[i-6].translate(this.blockArray[i].getHorzOffset(), 0, this.blockArray[i-6].getVertOffset()+50)
                     this.add(newArr[i-6]);
                 }

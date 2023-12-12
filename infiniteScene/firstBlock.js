@@ -25,37 +25,35 @@ class FirstBlock extends THREE.Mesh {
         super();
 
         // Prepare the animal sounds
-        this.quack = new THREE.Audio( listener );
-        this.oink = new THREE.Audio( listener );
+        // this.quack = new THREE.Audio( listener );
+        // this.oink = new THREE.Audio( listener );
+        const myQuack = new THREE.Audio(listener)
+        const myOink = new THREE.Audio(listener)
+        // console.log(this.quack)
+        // console.log(this.oink)
         const audioLoader = new THREE.AudioLoader();
         const audioLoader2 = new THREE.AudioLoader();
         audioLoader.load( '../sounds/quacking.mp3', function( buffer ) {
-            this.quack.setBuffer( buffer );
-            this.quack.setLoop( true );
-            this.quack.setVolume( 0.5 );
-        this.quack.isPlaying == false;
+            myQuack.setBuffer( buffer );
+            myQuack.setLoop( true );
+            myQuack.setVolume( 0.5 );
+        myQuack.isPlaying == false;
         });
+       // audioLoader2.load( '../sounds/peppa.mp3', function( buffer ) {
         audioLoader2.load( '../sounds/peppa.mp3', function( buffer ) {
-            this.oink.setBuffer( buffer );
-            this.oink.setLoop( true );
-            this.oink.setVolume( 0.5 );
-          this.oink.isPlaying == false;
+            myOink.setBuffer( buffer );
+            myOink.setLoop( true );
+            myOink.setVolume( 0.5 );
+          myOink.isPlaying == false;
         });
+
+        this.quack = myQuack;
+        this.oink = myOink;
 
         this.makeScene();
     }
 
     makeScene() {
-
-        // lighting
-        const light = new THREE.PointLight("white", 200)
-        light.position.set(-5, 15, 20);
-        light.decay = 1.5;
-        light.castShadow = true;
-        this.add(light)
-        const ambient_lighting = new THREE.AmbientLight(0x404040, 10)
-        this.add(ambient_lighting)
-
         // adding objects
         this.grass = new Grass(50, 90000)
         this.add(this.grass)

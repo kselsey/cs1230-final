@@ -14,10 +14,15 @@ class RandomBlock extends THREE.Mesh {
     pondList = [];
     appleTrees = [];
     allElements = [];
+
+    pigs = [];
+    quack;
+    oink;
+
     horzOffset;
     vertOffset;
 
-    constructor(){
+    constructor(listener){
         super();
 
         // grass
@@ -25,14 +30,8 @@ class RandomBlock extends THREE.Mesh {
         this.add(this.grass)
         this.allElements.push(this.grass);
 
+        // choose block
         const rand = Math.floor(Math.random()*5);
-        // if (rand==0){
-        //     for (let i=0; i<10; i++){
-        //         const newTree = new PineTree(i*10+5,5,0);
-        //         this.add(newTree);
-        //         this.allElements.push(newTree)
-        //     }
-        // }
         switch(rand){
             case 0:
                 this.box1();
@@ -50,6 +49,26 @@ class RandomBlock extends THREE.Mesh {
                     this.allElements.push(newTree)
                 }
         }
+
+        // set up noises
+        const myQuack = new THREE.Audio(listener)
+        const myOink = new THREE.Audio(listener)
+        const audioLoader = new THREE.AudioLoader();
+        const audioLoader2 = new THREE.AudioLoader();
+        audioLoader.load( '../sounds/quacking.mp3', function( buffer ) {
+            myQuack.setBuffer( buffer );
+            myQuack.setLoop( true );
+            myQuack.setVolume( 0.5 );
+        myQuack.isPlaying == false;
+        });
+        audioLoader2.load( '../sounds/peppa.mp3', function( buffer ) {
+            myOink.setBuffer( buffer );
+            myOink.setLoop( true );
+            myOink.setVolume( 0.5 );
+          myOink.isPlaying == false;
+        });
+        this.quack = myQuack;
+        this.oink = myOink;
     }
 
     box1() {
@@ -65,6 +84,7 @@ class RandomBlock extends THREE.Mesh {
                 const pig = new Pig();
                 this.add(pig.totalPig)
                 this.allElements.push(pig)
+                this.pigs.push(pig.body)
                 pig.translate(4*Math.floor(i%13) -24 , 0, 3.7*Math.floor(i/12) + 2)
             }
         }
@@ -126,13 +146,28 @@ class RandomBlock extends THREE.Mesh {
 
     animate(time, cameraPos){
         function check_if_should_make_noise(animal_x, animal_z, offset){
-            if(camera.position.z > animal_z - offset && camera.position.z < animal_z + offset 
-              && camera.position.x > animal_x - offset && camera.position.x <animal_x + offset){
+            if(cameraPos.z > animal_z - offset && cameraPos.z < animal_z + offset 
+              && cameraPos.x > animal_x - offset && cameraPos.x <animal_x + offset){
                 return true;
               } else {
                 return false;
               }
           }
+        var makePigNoise = false;
+        for (let i=0; i<this.pigs.length; i++){
+            var pigPos = new THREE.Vector3();
+            this.pigs[i].getWorldPosition( pigPos );
+            if (check_if_should_make_noise(pigPos.x, pigPos.z, 3)){
+                makePigNoise = true;
+        }
+        if (makePigNoise){
+            if(this.oink.isPlaying == false){
+                this.oink.play();
+              }
+            } else {
+              this.oink.pause();
+            }
+        }
 
         this.grass.update(time)
         this.pondList.forEach((pond) => pond.animate());
