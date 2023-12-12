@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import { Grass } from "./grass/grass";
 import { Barn } from "./barn";
@@ -8,6 +7,7 @@ import { PineTree } from "./pineTree.js";
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 // scene
 const canvas = document.querySelector("canvas.webgl");
@@ -55,17 +55,35 @@ const composer = new EffectComposer(renderer);
 const renderPass = new RenderPass(scene, camera);
 composer.addPass(renderPass);
 // Add depth of field
-const depthOfFieldPass = new BokehPass(scene, camera, {focus : 50, aperture : 0.05, maxblur : 0.0025});
+const depthOfFieldPass = new BokehPass(scene, camera, {focus: 50, aperture: 0.05, maxblur: 0.0025});
 composer.addPass(depthOfFieldPass);
+// Output pass for color correction
+// const outputPass = new OutputPass();
+// composer.addPass(outputPass);
 
 // Camera controls
 const controls = new PointerLockControls(camera, renderer.domElement);
-controls.addEventListener("change", () => console.log("changed"));
-controls.addEventListener("lock", () => console.log("locked"));
-controls.addEventListener("unlock", () => console.log("unlocked"));
+// Hide menu when locked, else show menu
+controls.addEventListener("lock", () => hideMenu());
+controls.addEventListener("unlock", () => showMenu());
 // Lock pointer on mouse click (unlock with escape)
 document.addEventListener("mousedown", () => controls.lock());
 document.addEventListener("keydown", onKeyDown, false);
+
+function hideMenu() {
+  let menu = document.getElementById("menu");
+  let controls = document.getElementById("controls");
+  menu.style.display = "none";
+  controls.style.display = "none";
+}
+
+function showMenu() {
+  let menu = document.getElementById("menu");
+  let controls = document.getElementById("controls");
+  menu.style.display = "flex";
+  controls.style.display = "flex";
+}
+
 function onKeyDown(event) {
   var keyCode = event.which;
   var offset = 0.08;
@@ -87,31 +105,18 @@ function onKeyDown(event) {
   }
 }
 
-// const controls = new OrbitControls( camera, renderer.domElement );
-// controls.keys = {
-// 	LEFT: 'KeyA',
-// 	UP: 'KeyQ',
-// 	RIGHT: 'KeyD',
-// 	BOTTOM: 'KeyE'
-// }
-// controls.listenToKeyEvents(document);
-// document.addEventListener("keydown", onKeyDown, false);
-// function onKeyDown(event) {
-//   var keyCode = event.which;
-//   var offset = .2;
-//   var up = new THREE.Vector3();
-//   up.copy(camera.up).applyQuaternion(camera.quaternion);
-//   camera.getWorldDirection(camera.lookAtVector);
-//   if (keyCode == 87) { // W key
-//     camera.position.x += camera.lookAtVector.x*offset;
-//     camera.position.y += camera.lookAtVector.y*offset;
-//     camera.position.z += camera.lookAtVector.z*offset;
-//   } if (keyCode == 83) { // S key
-//     camera.position.x -= camera.lookAtVector.x*offset;
-//     camera.position.y -= camera.lookAtVector.y*offset;
-//     camera.position.z -= camera.lookAtVector.z*offset;
-//   }
-// }
+// Resize scene on window resize
+window.addEventListener("resize", () => onResizeCanvas());
+
+function onResizeCanvas() {
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
+
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(sizes.width, sizes.height);
+}
 
 // animate
 renderer.setAnimationLoop((time) => {
