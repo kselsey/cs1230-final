@@ -9,6 +9,8 @@ import { Skybox } from "./skybox.js"
 import { PineTree } from "./Trees/pineTree.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { Pig } from "./animals/pig";
+import { LilyPad } from "./lilypad.js";
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 // scene
 const canvas = document.querySelector("canvas.webgl");
@@ -54,6 +56,56 @@ scene.add(pig3.totalPig);
 pig1.totalPig.position.set(0, 1, 12);
 pig2.totalPig.position.set(-5, 1, 20);
 pig3.totalPig.position.set(-15, 1, 40);
+
+// adding lilypads
+const lily1 = new LilyPad();
+scene.add(lily1.shape);
+lily1.shape.rotateX(-Math.PI/2);
+lily1.shape.position.set(-6, 0.92, 30);
+
+const lily2 = new LilyPad();
+scene.add(lily2.shape);
+lily2.shape.rotateX(-Math.PI/2);
+lily2.shape.position.set(-7, 0.92, 28);
+
+const lily3 = new LilyPad();
+scene.add(lily3.shape);
+lily3.shape.rotateX(-Math.PI/2);
+lily3.shape.rotateZ(-Math.PI/2);
+lily3.shape.position.set(-8, 0.92, 32);
+
+const lily4 = new LilyPad();
+scene.add(lily4.shape);
+lily4.shape.rotateX(-Math.PI/2);
+lily4.shape.rotateZ(-Math.PI/3);
+lily4.shape.position.set(-10, 0.92, 27);
+
+const lily5 = new LilyPad();
+scene.add(lily5.shape);
+lily5.shape.rotateX(-Math.PI/2);
+lily5.shape.rotateZ(Math.PI/3);
+lily5.shape.position.set(-13, 0.92, 27);
+
+// adding flower
+// Source:
+// This work is based on "white flower" (https://sketchfab.com/3d-models/white-flower-9e025b18a39741a4a38b197cee3cdcac)
+// by tojamerlin (https://sketchfab.com/tojamerlin) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+const loader = new GLTFLoader();
+loader.load("./white_flower/scene.gltf", function(gltf){
+  const flower1 = gltf.scene;
+  flower1.scale.set(0.03, 0.02, 0.03)
+  const flower2 = flower1.clone()
+  const flower3 = flower1.clone()
+  const flower4 = flower1.clone()
+  flower1.position.set(-3, 0.75, 30)
+  flower2.position.set(-3, 0.75, 31)
+  flower3.position.set(9, 0.5, 14.5)
+  flower4.position.set(14, 0.5, 14.5)
+  scene.add(flower1);
+  scene.add(flower2);
+  scene.add(flower3);
+  scene.add(flower4);
+});
 
 // camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);
@@ -153,12 +205,6 @@ var pig2_pos = new THREE.Vector3();
 pig2.body.getWorldPosition( pig2_pos );
 var pig3_pos = new THREE.Vector3();
 pig3.body.getWorldPosition( pig3_pos );
-
-// reset the potion of the water
-// pond.entirePond.position.set(-10, 0.1, 30);
-// var pond_pos = new THREE.Vector3();
-// pond.entirePond.getWorldPosition( pond_pos );
-// console.log(pond_pos);
 
 // animate
 renderer.setAnimationLoop((time) => {
