@@ -39,7 +39,8 @@ const grass = new Grass(50, 500000)
 scene.add(grass)
 const pond = new Pond();
 scene.add(pond)
-scene.add(new Skybox());
+const skybox = new Skybox();
+scene.add(skybox);
 scene.add(new Barn())
 scene.add(new PineTree(10, 5, 35));
 scene.add(new PineTree(18, 5, 30));
