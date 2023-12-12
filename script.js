@@ -1,14 +1,8 @@
 import * as THREE from "three";
 
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
-import { Grass } from "./grass/grass";
-import { Barn } from "./barn";
-import { AppleTree } from "./Trees/appleTree.js";
-import { Pond } from "./Pond";
+import { FullScene } from "./infiniteScene/fullScene.js"
 import { Skybox } from "./skybox.js"
-import { PineTree } from "./Trees/pineTree.js";
-import { Pig } from "./animals/pig";
-import { Cow } from "./animals/cow.js";
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
@@ -34,42 +28,6 @@ nightLight.position.set(-5, 15, 20);
 nightLight.decay = 1.5;
 nightLight.castShadow = true;
 
-// adding objects
-const grass = new Grass(50, 500000)
-scene.add(grass)
-const pond = new Pond();
-scene.add(pond)
-const skybox = new Skybox();
-scene.add(skybox);
-scene.add(new Barn())
-scene.add(new PineTree(10, 5, 35));
-scene.add(new PineTree(18, 5, 30));
-scene.add(new AppleTree());
-const appleTree2 = new AppleTree();
-appleTree2.move(-8,4);
-scene.add(appleTree2)
-
-// adding animals
-const pig1 = new Pig();
-const pig2 = new Pig();
-const pig3 = new Pig();
-scene.add(pig1.totalPig);
-scene.add(pig2.totalPig);
-scene.add(pig3.totalPig);
-pig1.totalPig.position.set(0, 1, 12);
-pig2.totalPig.position.set(-5, 1, 20);
-pig3.totalPig.position.set(-15, 1, 40);
-
-const cow1 = new Cow();
-const cow2 = new Cow();
-const cow3 = new Cow();
-scene.add(cow1.totalCow);
-scene.add(cow2.totalCow);
-scene.add(cow3.totalCow);
-cow1.totalCow.position.set(3, 1, 30)
-cow2.totalCow.position.set(10, 1, 15)
-cow3.totalCow.position.set(15, 1, 20);
-
 // camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);
 camera.position.z = 20;
@@ -77,6 +35,10 @@ camera.position.y = 2;
 camera.lookAtVector = new THREE.Vector3(0,0,-1);
 camera.getWorldDirection(camera.lookAtVector);
 scene.add(camera);
+
+// sounds listener
+const listener = new THREE.AudioListener();
+camera.add( listener );
 
 // renderer
 const renderer = new THREE.WebGLRenderer({
@@ -117,6 +79,9 @@ function showMenu() {
   menu.style.display = "flex";
   controls.style.display = "flex";
 }
+
+const skybox = new Skybox();
+scene.add(skybox);
 
 function onKeyDown(event) {
   var keyCode = event.which;
@@ -164,53 +129,14 @@ function onResizeCanvas() {
   renderer.setSize(sizes.width, sizes.height);
 }
 
-const listener = new THREE.AudioListener();
-camera.add(listener);
-const moo = new THREE.Audio(listener);
-const audioLoader3 = new THREE.AudioLoader();
-audioLoader3.load('animals/utils/moo.mp3', function(buffer) {
-  moo.setBuffer(buffer);
-  moo.setLoop(true);
-  moo.setVolume(0.5);
-moo.isPlaying == false;
-});
-
-var cow1Pos = new THREE.Vector3();
-cow1.body.getWorldPosition(cow1Pos);
-var cow2Pos = new THREE.Vector3();
-cow2.body.getWorldPosition(cow2Pos);
-var cow3Pos = new THREE.Vector3();
-cow3.body.getWorldPosition(cow3Pos);
+// scene
+const fullScene = new FullScene(listener);
+scene.add(fullScene);
 
 // animate
 renderer.setAnimationLoop((time) => {
-  //controls.update(0.0001 * time); // for firstPersonControls
-  function check_if_should_make_noise(animal_x, animal_z, offset) {
-    if (camera.position.z > animal_z - offset && camera.position.z < animal_z + offset 
-      && camera.position.x > animal_x - offset && camera.position.x <animal_x + offset) {
-        return true;
-      }
-      else {
-        return false;
-      }
-  }
-
-  grass.update(time)
-  pond.animate();
-  renderer.render(scene, camera)
-
-  var closeToCow1 = check_if_should_make_noise(cow1Pos.x, cow1Pos.z, 3);
-  var closeToCow2 = check_if_should_make_noise(cow2Pos.x, cow2Pos.z, 3);
-  var closeToCow3 = check_if_should_make_noise(cow3Pos.x, cow3Pos.z, 3);
-
-  if (closeToCow1 || closeToCow2 || closeToCow3) {
-    if (moo.isPlaying == false) {
-      moo.play();
-    }
-  } else {
-    moo.pause();
-  }
-  grass.update(time)
-  pond.animate();
+ // renderer.render(scene, camera)
+  fullScene.animate(time, camera.position)
   composer.render();
+
 })

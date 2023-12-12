@@ -43,4 +43,8 @@ export class PineTree extends THREE.Mesh{
             this.add(leafMesh)
         }
     }
+
+    translate(x, y, z){
+        this.shapesList.forEach(shape => shape.translate(x, y, z))
+    }
 }

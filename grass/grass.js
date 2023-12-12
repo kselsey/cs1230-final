@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import { vertexShader, fragmentShader } from './grassShaders'
 
-const BLADE_WIDTH = 0.1
-const BLADE_HEIGHT = 0.5
+const BLADE_WIDTH = 0.25
+const BLADE_HEIGHT = 0.55
 const BLADE_HEIGHT_VARIATION = 0.4
 const BLADE_VERTEX_COUNT = 5
 const BLADE_TIP_OFFSET = 0.1
@@ -12,6 +12,7 @@ function interpolate(val, oldMin, oldMax, newMin, newMax) {
 }
 
 export class GrassGeometry extends THREE.BufferGeometry {
+
   constructor(size, count) {
     super()
 
@@ -89,8 +90,11 @@ export class GrassGeometry extends THREE.BufferGeometry {
 }
 
 class Grass extends THREE.Mesh {
+  allElements = []
+
   constructor(size, count) {
     const geometry = new GrassGeometry(size, count)
+   // const geometry = new THREE.BoxGeometry();
     const material = new THREE.ShaderMaterial({
       uniforms: { uTime: { value: 0 } },
       side: THREE.DoubleSide,
@@ -98,19 +102,26 @@ class Grass extends THREE.Mesh {
       fragmentShader,
     })
     super(geometry, material)
+    this.allElements.push(geometry);
 
+   const floorGeometry = new THREE.BoxGeometry(size,1,size).translate(0, 0,size/2)
     const floor = new THREE.Mesh(
-      new THREE.BoxGeometry(size,1,size).translate(0, 0,size/2),
+      floorGeometry,
       material
      // new THREE.MeshStandardMaterial({color: "#33994d"})
     )
     floor.receiveShadow = true;
     floor.position.y = -Number.EPSILON
     this.add(floor)
+    this.allElements.push(floorGeometry)
   }
 
   update(time) {
     this.material.uniforms.uTime.value = time*.75
+  }
+
+  translate(x,y,z){
+    this.allElements.forEach((each) => each.translate(x,y,z))
   }
 }
 

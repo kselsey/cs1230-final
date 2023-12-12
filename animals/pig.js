@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { CustomSinCurve } from "./utils/customsincurve";
 
-class Pig {
+class Pig{
   constructor() {
     const bodyGeometry = new THREE.SphereGeometry(1, 32, 32);
     const bodyMaterial = new THREE.MeshToonMaterial({ color: 0xf7d3d2 });
@@ -39,6 +39,12 @@ class Pig {
     this.totalPig.add(this.tail);
 
     this.totalPig.position.set(0, 1, 0); // modify this in the scene
+  }
+
+  translate(x, y, z){
+    this.totalPig.position.x += x;
+    this.totalPig.position.y += y;
+    this.totalPig.position.z += z;
   }
 }
 
