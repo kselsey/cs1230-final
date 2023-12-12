@@ -63,9 +63,6 @@ composer.addPass(renderPass);
 // Add depth of field
 const depthOfFieldPass = new BokehPass(scene, camera, {focus: 50, aperture: 0.05, maxblur: 0.0025});
 composer.addPass(depthOfFieldPass);
-// Output pass for color correction
-// const outputPass = new OutputPass();
-// composer.addPass(outputPass);
 
 // Camera controls
 const controls = new PointerLockControls(camera, renderer.domElement);
@@ -114,13 +111,11 @@ function onKeyDown(event) {
     if (skybox.textureBasePath == "textures/skyboxOptions/daytimeSmooth") {
       skybox.textureBasePath = "textures/skyboxOptions/nighttimeSmooth";
       skybox.material = skybox.createMaterialArray(skybox.textureBasePath);
-      scene.remove(light);
-      scene.add(nightLight);
+      light.intensity = 50;
     } else {
       skybox.textureBasePath = "textures/skyboxOptions/daytimeSmooth";
       skybox.material = skybox.createMaterialArray(skybox.textureBasePath);
-      scene.remove(nightLight);
-      scene.add(light);
+      light.intensity = 250;
     }
   }
 }
