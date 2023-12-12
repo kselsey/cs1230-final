@@ -32,42 +32,6 @@ nightLight.position.set(-5, 15, 20);
 nightLight.decay = 1.5;
 nightLight.castShadow = true;
 
-// adding objects
-const grass = new Grass(50, 500000)
-scene.add(grass)
-const pond = new Pond();
-scene.add(pond)
-const skybox = new Skybox();
-scene.add(skybox);
-scene.add(new Barn())
-scene.add(new PineTree(10, 5, 35));
-scene.add(new PineTree(18, 5, 30));
-scene.add(new AppleTree());
-const appleTree2 = new AppleTree();
-appleTree2.move(-8,4);
-scene.add(appleTree2)
-
-// adding animals
-const pig1 = new Pig();
-const pig2 = new Pig();
-const pig3 = new Pig();
-scene.add(pig1.totalPig);
-scene.add(pig2.totalPig);
-scene.add(pig3.totalPig);
-pig1.totalPig.position.set(0, 1, 12);
-pig2.totalPig.position.set(-5, 1, 20);
-pig3.totalPig.position.set(-15, 1, 40);
-
-const cow1 = new Cow();
-const cow2 = new Cow();
-const cow3 = new Cow();
-scene.add(cow1.totalCow);
-scene.add(cow2.totalCow);
-scene.add(cow3.totalCow);
-cow1.totalCow.position.set(3, 1, 30)
-cow2.totalCow.position.set(10, 1, 15)
-cow3.totalCow.position.set(15, 1, 20);
-
 // camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);
 camera.position.z = 20;
@@ -87,15 +51,6 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.BasicShadowMap;
-
-// lighting
-const light = new THREE.PointLight("white", 200)
-light.position.set(-5, 15, 20);
-light.decay = 1.5;
-light.castShadow = true;
-scene.add(light)
-const ambient_lighting = new THREE.AmbientLight(0x404040, 10)
-scene.add(ambient_lighting)
 
 // Effect composer
 const composer = new EffectComposer(renderer);
