@@ -7,7 +7,6 @@ import { AppleTree } from "./Trees/appleTree.js";
 import { Pond } from "./Pond";
 import { Skybox } from "./skybox.js"
 import { PineTree } from "./Trees/pineTree.js";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { Pig } from "./animals/pig";
 import { Cow } from "./animals/cow.js";
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
