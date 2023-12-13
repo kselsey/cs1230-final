@@ -16,17 +16,12 @@ const sizes = {
 };
 
 // lighting
-const light = new THREE.PointLight("#f9fae1", 250)
-light.position.set(-5, 15, 20);
-light.decay = 1.5;
+const light = new THREE.PointLight("#f9fae1", 300, 0, 1.5)
+light.position.set(-10, 25, 20);
 light.castShadow = true;
 scene.add(light)
 const ambient_lighting = new THREE.AmbientLight(0x404040, 10)
 scene.add(ambient_lighting)
-const nightLight = new THREE.PointLight("#dae5f5", 50);
-nightLight.position.set(-5, 15, 20);
-nightLight.decay = 1.5;
-nightLight.castShadow = true;
 
 // camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 30000);
@@ -54,7 +49,7 @@ const composer = new EffectComposer(renderer);
 const renderPass = new RenderPass(scene, camera);
 composer.addPass(renderPass);
 // Add depth of field
-const depthOfFieldPass = new BokehPass(scene, camera, {focus: 50, aperture: 0.05, maxblur: 0.0025});
+const depthOfFieldPass = new BokehPass(scene, camera, {focus: 100, aperture: 0.05, maxblur: 0.0025});
 composer.addPass(depthOfFieldPass);
 
 // Camera controls
@@ -111,7 +106,7 @@ function onKeyDown(event) {
     } else {
       skybox.textureBasePath = "textures/skyboxOptions/daytimeSmooth";
       skybox.material = skybox.createMaterialArray(skybox.textureBasePath);
-      light.intensity = 250;
+      light.intensity = 300;
     }
   }
 }
