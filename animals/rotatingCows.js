@@ -46,21 +46,19 @@ class RotatingCows extends THREE.Mesh {
     this.position.x += x;
     this.position.y += y;
     this.position.z += z;
-    this.hay.totalHay.position.x += x
-    this.hay.totalHay.position.y += y
-    this.hay.totalHay.position.z += z
-    this.cows.forEach((cow) => cow.translate(x,y,z))
   }
 
   animate(cameraPos) {
+
     const radius = 3;
     const speed = .01;
     for (let i=0; i<3; i++){
+
         const x = this.hay.totalHay.position.x + radius * Math.cos(this.rotationAngles[i]);
         const z = this.hay.totalHay.position.z + radius * Math.sin(this.rotationAngles[i]);
         const prevX = this.cows[i].totalCow.position.x;
         const prevZ = this.cows[i].totalCow.position.z;
-        this.cows[i].totalCow.position.set(x,.5,z)
+        this.cows[i].totalCow.position.set(x,0,z)
 
         const angleChange = Math.atan2(z - prevZ, x - prevX);
         this.cows[i].totalCow.rotation.y = angleChange;

@@ -189,7 +189,7 @@ class RandomBlock extends THREE.Mesh {
                     const rot = new RotatingCows();
                     this.add(rot)
                     this.allElements.push(rot)
-                    rot.translate(coords[i][0], .5, coords[i][1])
+                    rot.translate(coords[i][0], 1, coords[i][1])
                     this.cows.push(rot)
                     this.cowAnimation.push(rot)
                     break;

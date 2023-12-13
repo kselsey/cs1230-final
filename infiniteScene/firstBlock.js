@@ -103,7 +103,7 @@ class FirstBlock extends THREE.Mesh {
 
       // adding hay + cows
       const rotatingCows = new RotatingCows();
-      rotatingCows.translate(3,.5,30);
+      rotatingCows.translate(3,1,30);
       this.add(rotatingCows)
       this.cows.push(rotatingCows)
       this.animationList.push(rotatingCows);
