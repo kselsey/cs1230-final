@@ -82,8 +82,8 @@ class FirstBlock extends THREE.Mesh {
       this.add(appleTree2);
       this.appleTrees.push(appleTree2);
       const tractor = new Tractor();
-      tractor.translate(10, 2, 17);
-      this.add(tractor);
+      tractor.translate(16, 2, 20);
+      this.add(tractor.totalTractor);
       const fence = new Fence(6);
       fence.translate(-20, 0, 0);
       this.add(fence);
@@ -181,24 +181,6 @@ class FirstBlock extends THREE.Mesh {
       }
 
       updateCowsPosition();
-
-      // const direction1 = new THREE.Vector3().subVectors(
-      //   hay.totalHay.position,
-      //   cow1.totalCow.position
-      // );
-      // const direction2 = new THREE.Vector3().subVectors(
-      //   hay.totalHay.position,
-      //   cow2.totalCow.position
-      // );
-      // const direction3 = new THREE.Vector3().subVectors(
-      //   hay.totalHay.position,
-      //   cow3.totalCow.position
-      // );
-
-      // // Set the rotation of the cows based on the direction vector
-      // cow1.totalCow.rotation.y = Math.atan2(direction1.x, direction1.z);
-      // cow2.totalCow.rotation.y = Math.atan2(direction2.x, direction2.z);
-      // cow3.totalCow.rotation.y = Math.atan2(direction3.x, direction3.z);
 
       // adding white flower
       // This work is based on "flower" (https://sketchfab.com/3d-models/flower-0fa50cf622f44f2ba59eff6c11cb8fbd)
@@ -338,7 +320,7 @@ class FirstBlock extends THREE.Mesh {
     }
 
     translate(x, y, z){
-        //TODO
+        //TODO?
         this.horzOffset? this.horzOffset += x : this.horzOffset = x;
         this.vertOffset? this.vertOffset += z : this.vertOffset = z;
     }

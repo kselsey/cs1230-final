@@ -85,6 +85,7 @@ class RandomBlock extends THREE.Mesh {
                 this.add(pig.totalPig)
                 this.allElements.push(pig)
                 this.pigs.push(pig.body)
+                pig.totalPig.rotation.y += Math.random()*Math.PI*2;
                 pig.translate(4*Math.floor(i%13) -24 , 0, 3.7*Math.floor(i/12) + 2)
             }
         }
@@ -125,7 +126,8 @@ class RandomBlock extends THREE.Mesh {
                 case 2:
                     const tractor = new Tractor();
                     tractor.translate(coords[i][0], 2, coords[i][1]);
-                    this.add(tractor)
+                    tractor.totalTractor.rotation.y += Math.random()*Math.PI*2
+                    this.add(tractor.totalTractor)
                     this.allElements.push(tractor)
                     break;
                 default:
