@@ -135,7 +135,7 @@ class RandomBlock extends THREE.Mesh {
             switch(rand){
                 case 0:
                 case 1:
-                    const newTree = new AppleTree();
+                    const newTree = new AppleTree(.5);
                     newTree.translate(coords[i][0], 0, coords[i][1]);
                     this.add(newTree)
                     this.allElements.push(newTree)

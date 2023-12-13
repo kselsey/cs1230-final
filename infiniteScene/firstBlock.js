@@ -73,10 +73,10 @@ class FirstBlock extends THREE.Mesh {
       this.add(new Barn());
       this.add(new PineTree(10, 5, 35));
       this.add(new PineTree(18, 5, 30));
-      const appleTree1 = new AppleTree();
+      const appleTree1 = new AppleTree(.2);
       this.add(appleTree1);
       this.animationList.push(appleTree1);
-      const appleTree2 = new AppleTree();
+      const appleTree2 = new AppleTree(.2);
       appleTree2.translate(-8, 0, 4);
       this.add(appleTree2);
       this.animationList.push(appleTree2);
@@ -107,63 +107,6 @@ class FirstBlock extends THREE.Mesh {
       this.add(rotatingCows)
       this.cows.push(rotatingCows)
       this.animationList.push(rotatingCows);
-
-      // const radius = 3;
-      // const speed = 0.01;
-      // let angle1 = 0;
-      // let angle2 = (Math.PI / 3) * 2;
-      // let angle3 = (Math.PI / 3) * 4;
-
-      // function updateCowsPosition() {
-        
-      //   const x1 = hay.totalHay.position.x + radius * Math.cos(angle1);
-      //   const z1 = hay.totalHay.position.z + radius * Math.sin(angle1);
-      //   const prevX1 = cow1.totalCow.position.x;
-      //   const prevZ1 = cow1.totalCow.position.z;
-      //   cow1.totalCow.position.set(x1, 1, z1);
-
-      //   const x2 = hay.totalHay.position.x + radius * Math.cos(angle2);
-      //   const z2 = hay.totalHay.position.z + radius * Math.sin(angle2);
-      //   const prevX2 = cow2.totalCow.position.x;
-      //   const prevZ2 = cow2.totalCow.position.z;
-      //   cow2.totalCow.position.set(x2, 1, z2);
-
-      //   const x3 = hay.totalHay.position.x + radius * Math.cos(angle3);
-      //   const z3 = hay.totalHay.position.z + radius * Math.sin(angle3);
-      //   const prevX3 = cow3.totalCow.position.x;
-      //   const prevZ3 = cow3.totalCow.position.z;
-      //   cow3.totalCow.position.set(x3, 1, z3);
-
-      //   // angles for each cow
-      //   const angleChange1 = Math.atan2(z1 - prevZ1, x1 - prevX1);
-      //   const angleChange2 = Math.atan2(z2 - prevZ2, x2 - prevX2);
-      //   const angleChange3 = Math.atan2(z3 - prevZ3, x3 - prevX3);
-
-      //   // rotation based on angle change
-      //   cow1.totalCow.rotation.y = angleChange1;
-      //   cow2.totalCow.rotation.y = angleChange2;
-      //   cow3.totalCow.rotation.y = angleChange3;
-
-      //   angle1 += speed;
-      //   angle2 += speed;
-      //   angle3 += speed;
-
-      //   if (angle1 > Math.PI * 2) {
-      //     angle1 -= Math.PI * 2;
-      //   }
-
-      //   if (angle2 > Math.PI * 2) {
-      //     angle2 -= Math.PI * 2;
-      //   }
-
-      //   if (angle3 > Math.PI * 2) {
-      //     angle3 -= Math.PI * 2;
-      //   }
-
-      //   requestAnimationFrame(updateCowsPosition);
-      // }
-
-      // updateCowsPosition();
 
       // adding white flower
       // This work is based on "flower" (https://sketchfab.com/3d-models/flower-0fa50cf622f44f2ba59eff6c11cb8fbd)

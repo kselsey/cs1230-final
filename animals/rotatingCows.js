@@ -24,9 +24,9 @@ class RotatingCows extends THREE.Mesh {
      this.add(cow1.totalCow);
      this.add(cow2.totalCow);
      this.add(cow3.totalCow);
-        cow1.translate(-2,-1,5);
-        cow2.translate(2,-1,0)
-        cow3.translate(-2,-1,-5)
+    cow1.translate(-2,-1,5);
+    cow2.translate(2,-1,0)
+    cow3.translate(-2,-1,-5)
 
      // initial rotation of cows
      cow1.totalCow.rotateY(THREE.MathUtils.degToRad(90));
@@ -54,23 +54,18 @@ class RotatingCows extends THREE.Mesh {
 
   animate(cameraPos) {
     const radius = 3;
-    const speed = 0.0000000001;
+    const speed = .01;
     for (let i=0; i<3; i++){
-        const lastRotate = this.rotationAngles[i];
         const x = this.hay.totalHay.position.x + radius * Math.cos(this.rotationAngles[i]);
         const z = this.hay.totalHay.position.z + radius * Math.sin(this.rotationAngles[i]);
         const prevX = this.cows[i].totalCow.position.x;
         const prevZ = this.cows[i].totalCow.position.z;
         this.cows[i].totalCow.position.set(x,.5,z)
 
-        this.rotationAngles[i] = Math.atan2(z - prevZ, x - prevX);
-        this.cows[i].totalCow.rotation.y = this.rotationAngles[i];
-        // this.cows[i].totalCow.rotateY(this.rotationAngles[i]-lastRotate)
+        const angleChange = Math.atan2(z - prevZ, x - prevX);
+        this.cows[i].totalCow.rotation.y = angleChange;
 
         this.rotationAngles[i] += speed;
-        if (this.rotationAngles[i] > Math.PI * 2) {
-            this.rotationAngles[i] -= Math.PI * 2;
-        }
     }
   }
 
