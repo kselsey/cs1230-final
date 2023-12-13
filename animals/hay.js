@@ -11,6 +11,12 @@ class Hay {
         this.totalHay.add(this.hayBail);
         this.totalHay.position.set(0, 1, 0);
     }
+
+    translate(x,y,z){
+        this.totalHay.position.x += x;
+        this.totalHay.position.y += y;
+        this.totalHay.position.z += z;
+    }
 }
 
 export { Hay }

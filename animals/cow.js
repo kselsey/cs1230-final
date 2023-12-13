@@ -62,6 +62,12 @@ class Cow {
 
     this.totalCow.position.set(0, 1, 0);
   }
+
+  translate(x, y, z){
+    this.totalCow.position.x += x;
+    this.totalCow.position.y += y;
+    this.totalCow.position.z += z;
+  }
 }
 
 export { Cow };

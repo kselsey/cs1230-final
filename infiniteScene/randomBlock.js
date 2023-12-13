@@ -1,23 +1,30 @@
 import * as THREE from "three";
 
 import { Pig } from "../animals/pig.js";
+import { Hay } from "../animals/hay.js"
+import { RotatingCows } from "../animals/rotatingCows.js"
 import { Grass } from "../grass/grass.js";
-import { Barn } from "../barn.js";
+import { Cow } from "../animals/cow.js";
 import { AppleTree } from "../Trees/appleTree.js";
-import { Pond } from "../Pond.js";
 import { Tractor } from "../tractor.js"
 import { Fence } from "../fence.js"
 import { PineTree } from "../Trees/pineTree.js";
+
+import { Pond } from "../Pond.js";
+import { Barn } from "../barn.js";
 
 class RandomBlock extends THREE.Mesh {
     grass;
     pondList = [];
     appleTrees = [];
     allElements = [];
+    cowAnimation = [];
 
     pigs = [];
+    cows = [];
     quack;
     oink;
+    moo;
 
     horzOffset;
     vertOffset;
@@ -31,7 +38,7 @@ class RandomBlock extends THREE.Mesh {
         this.allElements.push(this.grass);
 
         // choose block
-        const rand = Math.floor(Math.random()*5);
+        const rand = Math.floor(Math.random()*3);
         switch(rand){
             case 0:
                 this.box1();
@@ -40,26 +47,36 @@ class RandomBlock extends THREE.Mesh {
                 this.box2();
                 break;
             default:
-                for (let i=0; i<1; i++){
-                  //  const newTree = new PineTree(i*10+5,5,0);
-                    const newTree =new AppleTree();
-                    newTree.translate(i+10, 0, 25)
-                    this.add(newTree);
-                    this.appleTrees.push(newTree)
-                    this.allElements.push(newTree)
-                }
+                this.box3();
+                break;
+                // for (let i=0; i<1; i++){
+                //   //  const newTree = new PineTree(i*10+5,5,0);
+                //     const newTree =new AppleTree();
+                //     newTree.translate(i+10, 0, 25)
+                //     this.add(newTree);
+                //     this.appleTrees.push(newTree)
+                //     this.allElements.push(newTree)
+                // }
         }
 
         // set up noises
         const myQuack = new THREE.Audio(listener)
         const myOink = new THREE.Audio(listener)
+        const myMoo = new THREE.Audio(listener)
         const audioLoader = new THREE.AudioLoader();
+        const audioLoader1 = new THREE.AudioLoader();
         const audioLoader2 = new THREE.AudioLoader();
         audioLoader.load( '../sounds/quacking.mp3', function( buffer ) {
             myQuack.setBuffer( buffer );
             myQuack.setLoop( true );
             myQuack.setVolume( 0.5 );
         myQuack.isPlaying == false;
+        });
+        audioLoader1.load('../sounds/moo.mp3', function(buffer) {
+            myMoo.setBuffer(buffer);
+            myMoo.setLoop(true);
+            myMoo.setVolume(0.5);
+            myMoo.isPlaying == false;
         });
         audioLoader2.load( '../sounds/peppa.mp3', function( buffer ) {
             myOink.setBuffer( buffer );
@@ -69,6 +86,7 @@ class RandomBlock extends THREE.Mesh {
         });
         this.quack = myQuack;
         this.oink = myOink;
+        this.moo = myMoo;
     }
 
     box1() {
@@ -136,6 +154,51 @@ class RandomBlock extends THREE.Mesh {
         }
     }
 
+    box3(){
+        const coords = [[-20,3],[-16,16],[-21,28],[-11,38],[-5,8],[-12,23],[-13,44],
+                        [-8,47],[0, 25],[3,3],[1,16],[-2,31],[5,41],[6,21],[7,33],
+                        [8,8],[15,22],[13,18],[17,4],[-11,4],[17,37],[14,31],[11,46],
+                        [0,46],[21,13],[23,7],[22,27],[21,46],[-22,44],[-18,31],[-22,7]]
+        for (let i=0; i<coords.length; i++){
+            const rand = Math.floor(Math.random()*10)
+            switch(rand){
+                case 0:
+                    const newTree = new PineTree(coords[i][0], 5, coords[i][1]);
+                    this.add(newTree)
+                    this.allElements.push(newTree)
+                    break;
+                case 1:
+                case 2:
+                    const hay = new Hay();
+                    this.add(hay.totalHay)
+                    this.allElements.push(hay)
+                    hay.totalHay.position.set(coords[i][0], .5, coords[i][1])
+                    break;
+                case 3:
+                case 4:
+                    // make this just hay?
+                    // also try less flowers more trees
+                    const cow = new Cow();
+                    this.add(cow.totalCow)
+                    this.allElements.push(cow)
+                    cow.totalCow.rotation.y += Math.random()*Math.PI*2;
+                    this.cows.push(cow.body)
+                    cow.translate(coords[i][0] , .5, coords[i][1])
+                    break;
+                case 5:
+                    const rot = new RotatingCows();
+                    this.add(rot)
+                    this.allElements.push(rot)
+                    rot.translate(coords[i][0], .5, coords[i][1])
+                    this.cows.push(rot)
+                    this.cowAnimation.push(rot)
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     translate(x,y,z){
         this.allElements.forEach((each) => each.translate(x,y,z))
 
@@ -171,9 +234,26 @@ class RandomBlock extends THREE.Mesh {
             }
         }
 
-        this.grass.update(time)
+        var makeCowNoise = false;
+        for (let i=0; i<this.cows.length; i++){
+            var cowPos = new THREE.Vector3();
+            this.cows[i].getWorldPosition( cowPos );
+            if (check_if_should_make_noise(cowPos.x, cowPos.z, 3)){
+                makeCowNoise = true;
+        }
+        if (makeCowNoise){
+            if(this.moo.isPlaying == false){
+                this.moo.play();
+              }
+            } else {
+              this.moo.pause();
+            }
+        }
+
+        this.grass.animate(time)
         this.pondList.forEach((pond) => pond.animate());
         this.appleTrees.forEach((tree) => tree.animate(cameraPos));
+        this.cowAnimation.forEach((cows) => cows.animate(cameraPos))
     }
 
     delete(){

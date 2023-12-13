@@ -116,7 +116,7 @@ class Grass extends THREE.Mesh {
     this.allElements.push(floorGeometry)
   }
 
-  update(time) {
+  animate(time) {
     this.material.uniforms.uTime.value = time*.75
   }
 

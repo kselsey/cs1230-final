@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 import { Pig } from "../animals/pig.js";
-import { Cow } from "../animals/cow.js";
+import { RotatingCows } from "../animals/rotatingCows.js"
 import { Grass } from "../grass/grass.js";
 import { Barn } from "../barn.js";
 import { AppleTree } from "../Trees/appleTree.js";
@@ -12,12 +12,10 @@ import { Tractor } from "../tractor.js"
 import { Fence } from "../fence.js"
 import { LilyPad } from "../lilypad.js";
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { Hay } from "../hay.js";
 
 class FirstBlock extends THREE.Mesh {
     grass;
-    pond;
-    appleTrees = [];
+    animationList = []
     horzOffset;
     vertOffset;
 
@@ -68,19 +66,20 @@ class FirstBlock extends THREE.Mesh {
       // adding objects
       this.grass = new Grass(50, 90000);
       this.add(this.grass);
-      this.pond = new Pond();
-      this.add(this.pond);
+      const pond = new Pond();
+      this.add(pond);
+      this.animationList.push(pond)
       this.add(new Skybox());
       this.add(new Barn());
       this.add(new PineTree(10, 5, 35));
       this.add(new PineTree(18, 5, 30));
       const appleTree1 = new AppleTree();
       this.add(appleTree1);
-      this.appleTrees.push(appleTree1);
+      this.animationList.push(appleTree1);
       const appleTree2 = new AppleTree();
       appleTree2.translate(-8, 0, 4);
       this.add(appleTree2);
-      this.appleTrees.push(appleTree2);
+      this.animationList.push(appleTree2);
       const tractor = new Tractor();
       tractor.translate(16, 2, 20);
       this.add(tractor.totalTractor);
@@ -102,85 +101,69 @@ class FirstBlock extends THREE.Mesh {
       pig2.totalPig.position.set(-5, 1, 20);
       pig3.totalPig.position.set(-15, 1, 40);
 
-      // adding cows
-      const cow1 = new Cow();
-      const cow2 = new Cow();
-      const cow3 = new Cow();
-      this.add(cow1.totalCow);
-      this.add(cow2.totalCow);
-      this.add(cow3.totalCow);
-      this.cows.push(cow1.body);
-      this.cows.push(cow2.body);
-      this.cows.push(cow3.body);
-      cow1.totalCow.position.set(1, 1, 35);
-      cow2.totalCow.position.set(5, 1, 30);
-      cow3.totalCow.position.set(1, 1, 25);
+      // adding hay + cows
+      const rotatingCows = new RotatingCows();
+      rotatingCows.translate(3,.5,30);
+      this.add(rotatingCows)
+      this.cows.push(rotatingCows)
+      this.animationList.push(rotatingCows);
 
-      // adding hay
-      const hay = new Hay();
-      this.add(hay.totalHay);
-      hay.totalHay.position.set(3, 1, 30);
+      // const radius = 3;
+      // const speed = 0.01;
+      // let angle1 = 0;
+      // let angle2 = (Math.PI / 3) * 2;
+      // let angle3 = (Math.PI / 3) * 4;
 
-      // initial rotation of cows
-      cow1.totalCow.rotateY(THREE.MathUtils.degToRad(90));
-      cow2.totalCow.rotateY(THREE.MathUtils.degToRad(270));
-
-      const radius = 3;
-      const speed = 0.01;
-      let angle1 = 0;
-      let angle2 = (Math.PI / 3) * 2;
-      let angle3 = (Math.PI / 3) * 4;
-
-      function updateCowsPosition() {
+      // function updateCowsPosition() {
         
-        const x1 = hay.totalHay.position.x + radius * Math.cos(angle1);
-        const z1 = hay.totalHay.position.z + radius * Math.sin(angle1);
-        const prevX1 = cow1.totalCow.position.x;
-        const prevZ1 = cow1.totalCow.position.z;
-        cow1.totalCow.position.set(x1, 1, z1);
+      //   const x1 = hay.totalHay.position.x + radius * Math.cos(angle1);
+      //   const z1 = hay.totalHay.position.z + radius * Math.sin(angle1);
+      //   const prevX1 = cow1.totalCow.position.x;
+      //   const prevZ1 = cow1.totalCow.position.z;
+      //   cow1.totalCow.position.set(x1, 1, z1);
 
-        const x2 = hay.totalHay.position.x + radius * Math.cos(angle2);
-        const z2 = hay.totalHay.position.z + radius * Math.sin(angle2);
-        const prevX2 = cow2.totalCow.position.x;
-        const prevZ2 = cow2.totalCow.position.z;
-        cow2.totalCow.position.set(x2, 1, z2);
+      //   const x2 = hay.totalHay.position.x + radius * Math.cos(angle2);
+      //   const z2 = hay.totalHay.position.z + radius * Math.sin(angle2);
+      //   const prevX2 = cow2.totalCow.position.x;
+      //   const prevZ2 = cow2.totalCow.position.z;
+      //   cow2.totalCow.position.set(x2, 1, z2);
 
-        const x3 = hay.totalHay.position.x + radius * Math.cos(angle3);
-        const z3 = hay.totalHay.position.z + radius * Math.sin(angle3);
-        const prevX3 = cow3.totalCow.position.x;
-        const prevZ3 = cow3.totalCow.position.z;
-        cow3.totalCow.position.set(x3, 1, z3);
+      //   const x3 = hay.totalHay.position.x + radius * Math.cos(angle3);
+      //   const z3 = hay.totalHay.position.z + radius * Math.sin(angle3);
+      //   const prevX3 = cow3.totalCow.position.x;
+      //   const prevZ3 = cow3.totalCow.position.z;
+      //   cow3.totalCow.position.set(x3, 1, z3);
 
-        // angles for each cow
-        const angleChange1 = Math.atan2(z1 - prevZ1, x1 - prevX1);
-        const angleChange2 = Math.atan2(z2 - prevZ2, x2 - prevX2);
-        const angleChange3 = Math.atan2(z3 - prevZ3, x3 - prevX3);
+      //   // angles for each cow
+      //   const angleChange1 = Math.atan2(z1 - prevZ1, x1 - prevX1);
+      //   const angleChange2 = Math.atan2(z2 - prevZ2, x2 - prevX2);
+      //   const angleChange3 = Math.atan2(z3 - prevZ3, x3 - prevX3);
 
-        // rotation based on angle change
-        cow1.totalCow.rotation.y = angleChange1;
-        cow2.totalCow.rotation.y = angleChange2;
-        cow3.totalCow.rotation.y = angleChange3;
+      //   // rotation based on angle change
+      //   cow1.totalCow.rotation.y = angleChange1;
+      //   cow2.totalCow.rotation.y = angleChange2;
+      //   cow3.totalCow.rotation.y = angleChange3;
 
-        angle1 += speed;
-        angle2 += speed;
-        angle3 += speed;
+      //   angle1 += speed;
+      //   angle2 += speed;
+      //   angle3 += speed;
 
-        if (angle1 > Math.PI * 2) {
-          angle1 -= Math.PI * 2;
-        }
+      //   if (angle1 > Math.PI * 2) {
+      //     angle1 -= Math.PI * 2;
+      //   }
 
-        if (angle2 > Math.PI * 2) {
-          angle2 -= Math.PI * 2;
-        }
+      //   if (angle2 > Math.PI * 2) {
+      //     angle2 -= Math.PI * 2;
+      //   }
 
-        if (angle3 > Math.PI * 2) {
-          angle3 -= Math.PI * 2;
-        }
+      //   if (angle3 > Math.PI * 2) {
+      //     angle3 -= Math.PI * 2;
+      //   }
 
-        requestAnimationFrame(updateCowsPosition);
-      }
+      //   requestAnimationFrame(updateCowsPosition);
+      // }
 
-      updateCowsPosition();
+      // updateCowsPosition();
 
       // adding white flower
       // This work is based on "flower" (https://sketchfab.com/3d-models/flower-0fa50cf622f44f2ba59eff6c11cb8fbd)
@@ -314,9 +297,8 @@ class FirstBlock extends THREE.Mesh {
             this.quack.pause();
         }
 
-        this.grass.update(time)
-        this.pond.animate();
-        this.appleTrees.forEach((each) => each.animate(cameraPos));
+        this.grass.animate(time)
+        this.animationList.forEach((each) => each.animate(cameraPos));
     }
 
     translate(x, y, z){
