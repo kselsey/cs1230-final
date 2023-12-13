@@ -35,7 +35,7 @@ class Cow {
     const snout = new THREE.Mesh(snoutGeometry, snoutMaterial);
     snout.map = snoutTexture;
     snout.position.set(1.4, 0.4, 0);
-    snout.rotation.y = Math.PI /2;
+    snout.rotation.y = Math.PI / 2;
 
     const earGeometry = new THREE.SphereGeometry(0.15, 32, 32);
     const earMaterial = new THREE.MeshToonMaterial({ color: 0x000000 });
