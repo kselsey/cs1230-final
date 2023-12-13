@@ -40,13 +40,13 @@ class FirstBlock extends THREE.Mesh {
         audioLoader.load( '../sounds/quacking.mp3', function( buffer ) {
             myQuack.setBuffer( buffer );
             myQuack.setLoop( true );
-            myQuack.setVolume( 0.5 );
+            myQuack.setVolume( 0.6 );
             myQuack.isPlaying == false;
         });
         audioLoader2.load( '../sounds/peppa.mp3', function( buffer ) {
             myOink.setBuffer( buffer );
             myOink.setLoop( true );
-            myOink.setVolume( 0.5 );
+            myOink.setVolume( 0.7 );
             myOink.isPlaying == false;
         });
         audioLoader3.load('../sounds/moo.mp3', function(buffer) {
@@ -82,6 +82,7 @@ class FirstBlock extends THREE.Mesh {
       this.animationList.push(appleTree2);
       const tractor = new Tractor();
       tractor.translate(16, 2, 20);
+      tractor.totalTractor.rotation.y += Math.PI * 2 / 4 *.75;
       this.add(tractor.totalTractor);
       const fence = new Fence(6);
       fence.translate(-20, 0, 0);
@@ -204,7 +205,7 @@ class FirstBlock extends THREE.Mesh {
         for (let i=0; i<this.pigs.length; i++){
             var pigPos = new THREE.Vector3();
             this.pigs[i].getWorldPosition( pigPos );
-            if (check_if_should_make_noise(pigPos.x, pigPos.z, 3)){
+            if (check_if_should_make_noise(pigPos.x, pigPos.z, 3.5)){
                 makePigNoise = true;
         }
         if (makePigNoise){
@@ -220,7 +221,7 @@ class FirstBlock extends THREE.Mesh {
         for (let i=0; i<this.cows.length; i++){
             var cowPos = new THREE.Vector3();
             this.cows[i].getWorldPosition( cowPos );
-            if (check_if_should_make_noise(cowPos.x, cowPos.z, 3)){
+            if (check_if_should_make_noise(cowPos.x, cowPos.z, 4)){
                 makeCowNoise = true;
         }
         if (makeCowNoise){
