@@ -9,4 +9,4 @@ Then go to http://localhost:5173/ in a browser. Click on the screen so that you 
 - and press T to switch between day and night mode.
 
 # Video Demonstration
-[![Demo Video]([https://img.youtube.com/vi/StTqXEQ2l-Y](https://youtu.be/fGcLIYk6ldY)/0.jpg)](https://youtu.be/fGcLIYk6ldY)
+[![Demo Video](https://img.youtube.com/vi/fGcLIYk6ldY/0.jpg)](https://www.youtube.com/watch?v=fGcLIYk6ldY)
