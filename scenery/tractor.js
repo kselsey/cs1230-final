@@ -23,7 +23,7 @@ class Tractor extends THREE.Mesh {
     tractorTexture.wrapS = THREE.RepeatWrapping;
     tractorTexture.wrapT = THREE.RepeatWrapping;
     tractorTexture.repeat.set(6, 6);
-    const material = new THREE.MeshToonMaterial({color: "#1DAE12", map: tractorTexture})
+    const material = new THREE.MeshToonMaterial({color: "#25C618", map: tractorTexture})
     const sq1 = new THREE.BoxGeometry(2,3,2)
     const mesh1 = new THREE.Mesh(sq1, material);
     this.add(mesh1);
