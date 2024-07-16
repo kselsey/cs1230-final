@@ -5,13 +5,10 @@ import { Hay } from "../animals/hay.js"
 import { RotatingCows } from "../animals/rotatingCows.js"
 import { Grass } from "../grass/grass.js";
 import { Cow } from "../animals/cow.js";
-import { AppleTree } from "../Trees/appleTree.js";
-import { Tractor } from "../tractor.js"
-import { Fence } from "../fence.js"
-import { PineTree } from "../Trees/pineTree.js";
-
-import { Pond } from "../Pond.js";
-import { Barn } from "../barn.js";
+import { AppleTree } from "../trees/appleTree.js";
+import { Tractor } from "../scenery/tractor.js"
+import { Fence } from "../scenery/fence.js"
+import { PineTree } from "../trees/pineTree.js";
 
 class RandomBlock extends THREE.Mesh {
     grass;

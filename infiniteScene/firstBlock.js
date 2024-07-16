@@ -3,14 +3,14 @@ import * as THREE from "three";
 import { Pig } from "../animals/pig.js";
 import { RotatingCows } from "../animals/rotatingCows.js"
 import { Grass } from "../grass/grass.js";
-import { Barn } from "../barn.js";
-import { AppleTree } from "../Trees/appleTree.js";
-import { Pond } from "../Pond.js";
-import { Skybox } from "../skybox.js"
-import { PineTree } from "../Trees/pineTree.js";
-import { Tractor } from "../tractor.js"
-import { Fence } from "../fence.js"
-import { LilyPad } from "../lilypad.js";
+import { Barn } from "../scenery/barn.js";
+import { AppleTree } from "../trees/appleTree.js";
+import { Pond } from "../scenery/Pond.js";
+import { Skybox } from "../scenery/skybox.js"
+import { PineTree } from "../trees/pineTree.js";
+import { Tractor } from "../scenery/tractor.js"
+import { Fence } from "../scenery/fence.js"
+import { LilyPad } from "../scenery/lilypad.js";
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 class FirstBlock extends THREE.Mesh {

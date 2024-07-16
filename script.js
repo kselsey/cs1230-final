@@ -2,7 +2,7 @@ import * as THREE from "three";
 
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import { FullScene } from "./infiniteScene/fullScene.js"
-import { Skybox } from "./skybox.js"
+import { Skybox } from "./scenery/skybox.js"
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
